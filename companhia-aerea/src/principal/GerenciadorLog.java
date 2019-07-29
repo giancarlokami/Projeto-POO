@@ -13,7 +13,7 @@ public class GerenciadorLog implements AutoCloseable {
 	private BufferedWriter br;
 	
 	private GerenciadorLog() throws IOException {
-		br = new BufferedWriter(new FileWriter("log.txt"));
+		br = new BufferedWriter(new FileWriter("log.txt", true));
 		formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	}
 	

@@ -1,5 +1,10 @@
 package usuario;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+
+import aviao.Aviao;
 import aviao.Voo;
 
 public class Atendente extends Usuario {
@@ -11,15 +16,16 @@ public class Atendente extends Usuario {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void geraRelatorio(Voo voo) {
+	public void geraRelatorio(ArrayList<Voo> voos) {
 		
 	}
 
-	public Voo criaVoo() {
-		return null;
+	public void criaVoo(ArrayList<Aviao> avioes) {
+		Voo voo = new Voo(LocalDate.now(), LocalTime.now(), "Sao Paulo", "Rio de Janeiro", 100, 1000);
+		voo.setAviao(avioes.get(0));
 	}
 	
-	public void cancelaVoo(Voo voo) {
+	public void cancelaVoo(ArrayList<Voo> voos) {
 		
 	}
 

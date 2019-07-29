@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
+
+import exceptions.HorarioIndisponivelException;
 
 public class Voo implements Serializable {
 
@@ -54,23 +55,12 @@ public class Voo implements Serializable {
 		return precoClasseEconomica;
 	}
 
-	public ArrayList<Reserva> getReservas() {
-		ArrayList<Reserva> copia = new ArrayList<>();
-		Collections.copy(copia, this.reservas);
-		
-		return copia;
+	public ArrayList<Reserva> getReservas() {	
+		return this.reservas;
 	}
 
 	public ArrayList<Poltrona> getPoltronasLivres() {
-		ArrayList<Poltrona> copia = new ArrayList<>();
-
-		this.poltronas.forEach(poltrona -> {
-			if(!poltrona.estaOcupada()) {
-				copia.add(poltrona);
-			}
-		});
-		
-		return copia;
+		return this.poltronas;
 	}
 
 	public Aviao getAviao() {
@@ -78,7 +68,17 @@ public class Voo implements Serializable {
 	}
 	
 	public void setAviao(Aviao aviao) {
+		if(this.aviao != null) {
+			this.aviao.removeVoo(this);
+		}
+		try {
+			aviao.addVoo(this);
+		} catch (HorarioIndisponivelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.aviao = aviao;
+		
 	}
 
 	public int getPoltronasLivresPrimeiraClasse() {

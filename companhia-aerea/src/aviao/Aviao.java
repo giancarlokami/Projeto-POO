@@ -2,29 +2,26 @@ package aviao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import exceptions.HorarioIndisponivelException;
 
 public class Aviao implements Serializable {
 
 	private static final long serialVersionUID = -5348639226293092840L;
-	private String modelo;
+	private String nome;
 	private ArrayList<Voo> voos;
 	
-	public Aviao(String modelo) {
-		
+	public Aviao(String nome) {
+		this.nome = nome;
+		this.voos = new ArrayList<>();
 	}
 	
-	public String getModelo() {
-		return modelo;
+	public String getNome() {
+		return nome;
 	}
 	
 	public ArrayList<Voo> getVoos() {
-		ArrayList<Voo> copia = new ArrayList<>();
-		Collections.copy(copia, voos);
-		
-		return copia;
+		return voos;
 	}
 	
 	@Override
@@ -35,12 +32,15 @@ public class Aviao implements Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+		if(obj instanceof Aviao) {
+			return this.nome.equals(((Aviao) obj).getNome());
+		}
+		
+		return false;
 	}
 	
 	public void addVoo(Voo voo) throws HorarioIndisponivelException {
-		
+		this.voos.add(voo);
 	}
 	
 	public void removeVoo(Voo voo) {

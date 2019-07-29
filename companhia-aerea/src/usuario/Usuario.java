@@ -13,11 +13,15 @@ public abstract class Usuario implements Serializable {
 	private ArrayList<Reserva> reservas;
 	
 	public Usuario(String nome) {
-
+		this.nome = nome;
 	}
 
 	public String getNome() {
 		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public ArrayList<Reserva> getReservas() {
@@ -26,6 +30,15 @@ public abstract class Usuario implements Serializable {
 	
 	@Override
 	public abstract String toString();
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Usuario) {
+			return this.nome.equals(((Usuario) obj).getNome());
+		}
+		
+		return false;
+	}
 	
 	public void reservaVoo(Voo voo) {
 		

@@ -80,6 +80,12 @@ public class Reserva implements Serializable{
 		return this.usuario.getNome();
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+	
 	public void addAdultos(int qtd) throws MuitasReservasException {
 		
 	}
