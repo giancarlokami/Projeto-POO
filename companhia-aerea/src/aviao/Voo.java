@@ -8,7 +8,7 @@ import java.util.Collections;
 
 public class Voo implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8902228118656955748L;
 	private LocalDate data;
 	private LocalTime hora;
 	private String origem;

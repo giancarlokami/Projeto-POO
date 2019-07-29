@@ -8,7 +8,7 @@ import exceptions.HorarioIndisponivelException;
 
 public class Aviao implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5348639226293092840L;
 	private String modelo;
 	private ArrayList<Voo> voos;
 	

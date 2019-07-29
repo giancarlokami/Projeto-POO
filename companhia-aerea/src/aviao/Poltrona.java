@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Poltrona implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8110758105945324153L;
 	private int numero;
 	private String tipo;
 	private boolean primeiraClasse;

@@ -9,7 +9,7 @@ import usuario.Usuario;
 
 public class Reserva implements Serializable{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5250405250006318152L;
 	private double valorTotal;
 	private int qtdCriancas;
 	private int qtdAdultos;
