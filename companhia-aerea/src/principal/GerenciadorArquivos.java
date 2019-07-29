@@ -29,7 +29,7 @@ public class GerenciadorArquivos<T extends Serializable> {
 		this.nomeArquivo = nomeArquivo;
 	}
 	
-	public void salvaDados(ArrayList<T> dados) throws IOException {
+	public void salvaDados(List<T> dados) throws IOException {
 		if(dados != null) {
 			ObjectOutputStream escritorObjs = new ObjectOutputStream(new FileOutputStream(this.nomeArquivo + "-new.bin"));
 			escritorObjs.writeObject(dados);
@@ -39,10 +39,10 @@ public class GerenciadorArquivos<T extends Serializable> {
 		}
 	}
 	
-	public ArrayList<T> carregaDados() throws IOException {
+	public List<T> carregaDados() throws IOException {
 		try {
 			ObjectInputStream leitorObjs = new ObjectInputStream(new FileInputStream(this.nomeArquivo + ".bin"));
-			ArrayList<T> dados = new ArrayList<>();
+			List<T> dados = new ArrayList<>();
 			
 			List<?> objs = (List<?>) leitorObjs.readObject();
 			leitorObjs.close();
