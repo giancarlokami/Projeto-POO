@@ -1,12 +1,14 @@
 package usuario;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import aviao.Reserva;
 import aviao.Voo;
 
-public abstract class Usuario {
+public abstract class Usuario implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private String nome;
 	private ArrayList<Reserva> reservas;
 	

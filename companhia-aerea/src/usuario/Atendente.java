@@ -4,6 +4,8 @@ import aviao.Voo;
 
 public class Atendente extends Usuario {
 
+	private static final long serialVersionUID = 1L;
+
 	public Atendente(String nome) {
 		super(nome);
 		// TODO Auto-generated constructor stub

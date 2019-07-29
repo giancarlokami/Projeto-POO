@@ -1,14 +1,15 @@
 package aviao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import exceptions.MuitasReservasException;
 import pagamento.MetodoPagamento;
 import usuario.Usuario;
 
-public class Reserva {
+public class Reserva implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private double valorTotal;
 	private int qtdCriancas;
 	private int qtdAdultos;
@@ -28,9 +29,7 @@ public class Reserva {
 		this.qtdEconomica = qtdEconomica;
 		this.usuario = usuario;
 		this.voo = voo;
-		this.poltronas = new ArrayList<>();
-		
-		Collections.copy(this.poltronas, poltronas);
+		this.poltronas = poltronas;
 	}
 
 	public MetodoPagamento getPagamento() {
@@ -67,6 +66,18 @@ public class Reserva {
 	
 	public boolean embarcou() {
 		return embarcou;
+	}
+	
+	public ArrayList<Poltrona> getPoltronas() {
+		return poltronas;
+	}
+	
+	public Voo getVoos() {
+		return this.voo;
+	}
+	
+	public String getNomeUsuario() {
+		return this.usuario.getNome();
 	}
 	
 	public void addAdultos(int qtd) throws MuitasReservasException {

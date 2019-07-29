@@ -4,6 +4,7 @@ import aviao.Voo;
 
 public class MuitasReservasException extends RuntimeException {
 	
+	private static final long serialVersionUID = 1L;
 	private int poltronasPrimeiraClasse;
 	private int poltronasEconomica;
 	

@@ -1,12 +1,14 @@
 package aviao;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Voo {
-	
+public class Voo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private LocalDate data;
 	private LocalTime hora;
 	private String origem;

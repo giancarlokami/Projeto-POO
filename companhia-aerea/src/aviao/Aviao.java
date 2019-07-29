@@ -1,12 +1,14 @@
 package aviao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import exceptions.HorarioIndisponivelException;
 
-public class Aviao {
+public class Aviao implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String modelo;
 	private ArrayList<Voo> voos;
 	

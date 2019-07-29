@@ -1,7 +1,10 @@
 package aviao;
 
-public class Poltrona {
+import java.io.Serializable;
 
+public class Poltrona implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private int numero;
 	private String tipo;
 	private boolean primeiraClasse;

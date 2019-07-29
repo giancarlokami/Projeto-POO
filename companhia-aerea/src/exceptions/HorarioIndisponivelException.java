@@ -5,6 +5,7 @@ import aviao.Voo;
 
 public class HorarioIndisponivelException extends Exception{
 
+	private static final long serialVersionUID = 1L;
 	private Voo voo;
 	private Aviao aviao;
 	
