@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import aviao.Aviao;
-import aviao.Reserva;
 import aviao.Voo;
 import exceptions.HorarioIndisponivelException;
 import usuario.Atendente;
@@ -15,7 +14,7 @@ import usuario.Usuario;
 
 public class Sistema {
 	
-	private static final int qtdAvioes = 4;
+	public static final int qtdAvioes = 4;
 	private static ArrayList<Aviao> avioes;
 	private static ArrayList<Usuario> users;
 	private static GerenciadorArquivos<Usuario> gerenciadorUsuarios;
@@ -379,18 +378,18 @@ public class Sistema {
 			
 			switch(escolha) {
 			case 1:
-				if(usuario.getReservas() == null || usuario.getReservas().size() == 0) {
+				/*if(usuario.getReservas() == null || usuario.getReservas().size() == 0) {
 					System.out.println("O usuario nao possui reservas");
 				} else {
 					usuario.getReservas().forEach(reserva -> System.out.println(reserva));
 				}
-				
+				*/
 				break;
 			case 2:
-				menuCancelaReserva(usuario);
+				//menuCancelaReserva(usuario);
 				break;
 			case 3:
-				menuPagaReserva(usuario);
+				//menuPagaReserva(usuario);
 				break;
 			case 4:
 				menuBuscaVoo(usuario);
@@ -427,18 +426,18 @@ public class Sistema {
 			
 			switch(escolha) {
 			case 1:
-				if(atendente.getReservas() == null || atendente.getReservas().size() == 0) {
+				/*if(atendente.getReservas() == null || atendente.getReservas().size() == 0) {
 					System.out.println("O usuario nao possui reservas");
 				} else {
 					atendente.getReservas().forEach(reserva -> System.out.println(reserva));
 				}
-				
+				*/
 				break;
 			case 2:
-				menuCancelaReserva(atendente);
+				//menuCancelaReserva(atendente);
 				break;
 			case 3:
-				menuPagaReserva(atendente);
+				//menuPagaReserva(atendente);
 				break;
 			case 4:
 				menuBuscaVoo(atendente);
@@ -463,7 +462,7 @@ public class Sistema {
 			}
 		}
 	}
-	
+	/*
 	private static void menuCancelaReserva(Usuario usuario) {
 		ArrayList<Reserva> reservas = usuario.getReservas();
 		
@@ -520,7 +519,7 @@ public class Sistema {
 		} else {
 			System.out.println("O usuario nao possui reservas");
 		}
-	}
+	}*/
 	
 	private static void menuBuscaVoo(Usuario usuario) {
 		System.out.println("Digite um destino, use '_' ou '-' no lugar de espacos, ou 'S' para voltar: ");

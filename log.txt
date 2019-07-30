@@ -1,0 +1,7 @@
+[29/07/2019 23:33:52] Sistema iniciado.
+[29/07/2019 23:33:52] Usuarios carregados com sucesso.
+[29/07/2019 23:33:52] Voos carregados com sucesso.
+[29/07/2019 23:35:07] Desligando sistema.
+[29/07/2019 23:35:07] Usuarios salvos com sucesso.
+[29/07/2019 23:35:07] Voos salvos com sucesso
+[29/07/2019 23:35:07] Sistema desligou sem erros.
