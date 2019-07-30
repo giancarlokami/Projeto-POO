@@ -24,7 +24,9 @@ public abstract class Usuario implements Serializable {
 	}
 	
 	@Override
-	public abstract String toString();
+	public String toString() {
+		return getNome();
+	}
 	
 	@Override
 	public boolean equals(Object obj) {
