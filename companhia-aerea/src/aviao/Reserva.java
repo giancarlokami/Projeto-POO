@@ -2,7 +2,7 @@ package aviao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import java.util.List;
 import exceptions.MuitasReservasException;
 import pagamento.MetodoPagamento;
 import usuario.Usuario;
@@ -30,6 +30,7 @@ public class Reserva implements Serializable{
 		this.usuario = usuario;
 		this.voo = voo;
 		this.poltronas = poltronas;
+		calculaValorTotal();
 	}
 
 	public MetodoPagamento getPagamento() {
@@ -86,7 +87,24 @@ public class Reserva implements Serializable{
 		return super.toString();
 	}
 	
-	public void addAdultos(int qtd) throws MuitasReservasException {
+	public void calculaValorTotal() {
+		this.valorTotal = this.voo.getPrecoClasseEconomica() * this.getQtdEconomica() + this.voo.getPrecoPrimeiraClasse() * this.qtdPrimeiraClasse;
+	}
+	
+	public void reservaPoltrona() {
+		List<Poltrona> polt2 = voo.getPoltronasLivresPrimeiraClasse();
+		for(int i=0;i<qtdPrimeiraClasse;i++) {
+			polt2.get(i).reserva();
+		}
+		polt2.clear();
+		polt2 = voo.getPoltronasLivresEconomica();
+		for(int i=0;i<qtdEconomica;i++) {
+			polt2.get(i).reserva();
+		}
+		
+	}
+	
+	public void addAdultos(int qtd) throws MuitasReservasException { 
 		
 	}
 	

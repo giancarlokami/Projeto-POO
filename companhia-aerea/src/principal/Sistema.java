@@ -15,7 +15,7 @@ import usuario.Usuario;
 
 public class Sistema {
 	
-	private static final int qtdAvioes = 4;
+	public static final int qtdAvioes = 4;
 	private static ArrayList<Aviao> avioes;
 	private static ArrayList<Usuario> users;
 	private static GerenciadorArquivos<Usuario> gerenciadorUsuarios;

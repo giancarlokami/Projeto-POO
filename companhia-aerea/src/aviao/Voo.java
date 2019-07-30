@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import exceptions.HorarioIndisponivelException;
 
@@ -29,6 +31,7 @@ public class Voo implements Serializable {
 		this.precoClasseEconomica = precoClasseEconomica;
 		this.reservas = new ArrayList<>();
 		this.poltronas = new ArrayList<>();
+		inicializaPoltronas();
 	}
 
 	public LocalDate getData() {
@@ -60,7 +63,13 @@ public class Voo implements Serializable {
 	}
 
 	public ArrayList<Poltrona> getPoltronasLivres() {
-		return this.poltronas;
+		ArrayList<Poltrona> livres = poltronas;
+		for (Poltrona p: poltronas) {
+			if(!p.estaOcupada())
+				livres.add(p);
+		}
+		return livres;
+		
 	}
 
 	public Aviao getAviao() {
@@ -73,23 +82,45 @@ public class Voo implements Serializable {
 		}
 		try {
 			aviao.addVoo(this);
+			this.aviao = aviao;
 		} catch (HorarioIndisponivelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.aviao = aviao;
-		
+			
 	}
 
-	public int getPoltronasLivresPrimeiraClasse() {
-		return 0;
+	public void inicializaPoltronas() {
+		String tipo;
+		for(int i=1;i<=20;i++) {
+			if(i%4==1||i%4==0) tipo = "Janela";
+			else tipo = "Corredor";
+			Poltrona pol = new Poltrona(i,tipo,true);
+			poltronas.add(pol);
+		}
+		for(int i=21;i<=110;i++) {
+			if(i%6==1||i%6==0) tipo = "Janela";
+			else if(i%6==2||i%6==5) tipo = "Meio";
+			else tipo = "Corredor";
+			Poltrona pol = new Poltrona(i,tipo,false);
+			poltronas.add(pol);
+		}
+	}
+	public List<Poltrona> getPoltronasLivresPrimeiraClasse() {
+		List<Poltrona> polt2 = this.getPoltronasLivres();
+		return polt2.stream().filter(p->!p.estaOcupada()&&!p.ehPrimeiraClasse()).collect(Collectors.toList());
 	}
 	
-	public int getPoltronasLivresEconomica() {
-		return 0;
+	public List<Poltrona> getPoltronasLivresEconomica() {
+		List<Poltrona> polt2 = this.getPoltronasLivres();
+		return polt2.stream().filter(p->!p.estaOcupada()&&p.ehPrimeiraClasse()).collect(Collectors.toList());
 	}
 	
 	public int getQtdPassageirosABordo() {
-		return 0;
+		int count = 0;
+		for(int i=0;i<110;i++) {
+			if(!poltronas.get(i).estaOcupada()) count++;
+		}
+		return count;
 	}
 }
