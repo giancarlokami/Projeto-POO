@@ -14,12 +14,20 @@ public class Poltrona implements Serializable {
 	private Usuario dono;
 	private String idade;
 	
+
 	public Poltrona(int numero, String tipo, boolean primeiraClasse) {
 		this.numero = numero;
 		this.tipo = tipo;
 		this.primeiraClasse = primeiraClasse;
 	}
 
+	public Usuario getUsuario() {
+		return dono;
+	}
+	public String getIdade() {
+		return idade;
+	}
+	
 	public int getNumero() {
 		return numero;
 	}
