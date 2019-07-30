@@ -254,7 +254,7 @@ public class Sistema {
 				if(users.size() == 0) {
 					System.out.println("Nao ha usuarios cadastrados");
 				} else {
-					users.forEach(u -> System.out.println(u));
+					users.forEach(u -> System.out.println(u.toString()));
 				}
 				break;
 			case 4:
