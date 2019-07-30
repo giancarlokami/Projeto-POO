@@ -41,8 +41,10 @@ public class Aviao implements Serializable {
 	
 	public void addVoo(Voo voo) throws HorarioIndisponivelException {
 		for(Voo vooat : voos) {
-			if(voo.getData()==vooat.getData() && voo.getHora() == vooat.getHora());
-				return;//era pra dar o erro de n tem horario mas eu n sei fazer isso
+			if(voo.getData()==vooat.getData() && voo.getHora() == vooat.getHora());{
+				throw new HorarioIndisponivelException(this, voo);
+				
+			}
 		}
 		this.voos.add(voo);
 	}

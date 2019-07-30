@@ -18,7 +18,6 @@ public class Voo implements Serializable {
 	private String destino;
 	private double precoPrimeiraClasse;
 	private double precoClasseEconomica;
-	private ArrayList<Reserva> reservas;
 	private ArrayList<Poltrona> poltronas;
 	private Aviao aviao;
 	
@@ -29,7 +28,6 @@ public class Voo implements Serializable {
 		this.destino = destino;
 		this.precoPrimeiraClasse = precoPrimeiraClasse;
 		this.precoClasseEconomica = precoClasseEconomica;
-		this.reservas = new ArrayList<>();
 		this.poltronas = new ArrayList<>();
 		inicializaPoltronas();
 	}
@@ -56,10 +54,6 @@ public class Voo implements Serializable {
 
 	public double getPrecoClasseEconomica() {
 		return precoClasseEconomica;
-	}
-
-	public ArrayList<Reserva> getReservas() {	
-		return this.reservas;
 	}
 
 	public ArrayList<Poltrona> getPoltronasLivres() {
