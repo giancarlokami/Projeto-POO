@@ -2,6 +2,8 @@ package aviao;
 
 import java.io.Serializable;
 
+import usuario.Usuario;
+
 public class Poltrona implements Serializable {
 
 	private static final long serialVersionUID = -8110758105945324153L;
@@ -9,13 +11,23 @@ public class Poltrona implements Serializable {
 	private String tipo;
 	private boolean primeiraClasse;
 	private boolean ocupada;
+	private Usuario dono;
+	private String idade;
 	
+
 	public Poltrona(int numero, String tipo, boolean primeiraClasse) {
 		this.numero = numero;
 		this.tipo = tipo;
 		this.primeiraClasse = primeiraClasse;
 	}
 
+	public Usuario getUsuario() {
+		return dono;
+	}
+	public String getIdade() {
+		return idade;
+	}
+	
 	public int getNumero() {
 		return numero;
 	}
@@ -32,12 +44,19 @@ public class Poltrona implements Serializable {
 		return ocupada;
 	}
 	
-	public void reserva() {
+	public void reserva(Usuario user,String idade) {
 		this.ocupada = true;
+		this.dono = user;
+		this.idade = idade;
+		
 	}
 	
-	public void desocupa() {
-		if(this.ocupada==true)
+	public void cancela() {
+		if(this.ocupada==true) {
 			this.ocupada = false;
+			this.dono = null;
+			this.idade = null;
+		}
 	}
+	
 }

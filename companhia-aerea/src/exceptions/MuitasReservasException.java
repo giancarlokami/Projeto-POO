@@ -11,8 +11,8 @@ public class MuitasReservasException extends RuntimeException {
 	public MuitasReservasException(Voo voo) {
 		super("O Voo não possui poltronas suficientes para essa reserva.");
 		
-		this.poltronasPrimeiraClasse = voo.getPoltronasLivresPrimeiraClasse();
-		this.poltronasEconomica = voo.getPoltronasLivresEconomica();
+		this.poltronasPrimeiraClasse = voo.getPoltronasLivresPrimeiraClasse().size();
+		this.poltronasEconomica = voo.getPoltronasLivresEconomica().size();
 	}
 
 	public int getPoltronasPrimeiraClasse() {
