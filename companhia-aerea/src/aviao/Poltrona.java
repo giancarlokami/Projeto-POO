@@ -33,10 +33,11 @@ public class Poltrona implements Serializable {
 	}
 	
 	public void reserva() {
-		
+		this.ocupada = true;
 	}
 	
 	public void desocupa() {
-		
+		if(this.ocupada==true)
+			this.ocupada = false;
 	}
 }
