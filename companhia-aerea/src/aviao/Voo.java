@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import exceptions.HorarioIndisponivelException;
@@ -57,13 +56,7 @@ public class Voo implements Serializable {
 	}
 
 	public ArrayList<Poltrona> getPoltronasLivres() {
-		ArrayList<Poltrona> livres = poltronas;
-		for (Poltrona p: poltronas) {
-			if(!p.estaOcupada())
-				livres.add(p);
-		}
-		return livres;
-		
+		return (ArrayList<Poltrona>) poltronas.stream().filter(p -> !p.estaOcupada()).collect(Collectors.toList());
 	}
 
 	public Aviao getAviao() {
@@ -100,14 +93,13 @@ public class Voo implements Serializable {
 			poltronas.add(pol);
 		}
 	}
-	public List<Poltrona> getPoltronasLivresPrimeiraClasse() {
-		List<Poltrona> polt2 = this.getPoltronasLivres();
-		return polt2.stream().filter(p->!p.estaOcupada()&&!p.ehPrimeiraClasse()).collect(Collectors.toList());
+	
+	public ArrayList<Poltrona> getPoltronasLivresPrimeiraClasse() {
+		return (ArrayList<Poltrona>) poltronas.stream().filter(p -> !p.estaOcupada() && p.ehPrimeiraClasse()).collect(Collectors.toList());
 	}
 	
-	public List<Poltrona> getPoltronasLivresEconomica() {
-		List<Poltrona> polt2 = this.getPoltronasLivres();
-		return polt2.stream().filter(p->!p.estaOcupada()&&p.ehPrimeiraClasse()).collect(Collectors.toList());
+	public ArrayList<Poltrona> getPoltronasLivresEconomica() {
+		return (ArrayList<Poltrona>) poltronas.stream().filter(p -> !p.estaOcupada() && !p.ehPrimeiraClasse()).collect(Collectors.toList());
 	}
 	
 	public int getQtdPassageirosABordo() {
@@ -117,4 +109,10 @@ public class Voo implements Serializable {
 		}
 		return count;
 	}
+
+	public ArrayList<Poltrona> getPoltronas() {
+		return poltronas;
+	}
+	
+	
 }

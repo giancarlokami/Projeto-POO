@@ -1,7 +1,6 @@
 package usuario;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import aviao.Voo;
 
@@ -9,10 +8,16 @@ public abstract class Usuario implements Serializable {
 	
 	private static final long serialVersionUID = -343373518797799409L;
 	private String nome;
+	private int idade;
 
+	public Usuario(String nome, int idade) {
+		setNome(nome);
+		setIdade(idade);
+	}
 	
 	public Usuario(String nome) {
-		this.nome = nome;
+		setNome(nome);
+		setIdade(18);
 	}
 
 	public String getNome() {
@@ -24,7 +29,9 @@ public abstract class Usuario implements Serializable {
 	}
 	
 	@Override
-	public abstract String toString();
+	public String toString() {
+		return getNome();
+	}
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -44,4 +51,11 @@ public abstract class Usuario implements Serializable {
 		
 	}
 	
+	public int getIdade() {
+		return idade;
+	}
+
+	private void setIdade(int idade) {
+		this.idade = idade;
+	}
 }

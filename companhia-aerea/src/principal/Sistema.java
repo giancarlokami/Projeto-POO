@@ -273,6 +273,7 @@ public class Sistema {
 	private static void menuCadastroUsuario() {
 		char tipoUser;
 		String nomeUser;
+		String idadeUser;
 		Usuario novo;
 		
 		System.out.println("Digite o tipo de usuario(A para Atendente, P para passageiro), ou digite 'S' para voltar:");
@@ -306,7 +307,19 @@ public class Sistema {
 		if(tipoUser == 'A') {
 			novo = new Atendente(nomeUser);
 		} else {
-			novo = new Passageiro(nomeUser);
+			System.out.println("Digite a idade do usuario, ou 'S' para voltar:");
+			idadeUser = sc.next();
+			
+			if(idadeUser.toUpperCase().equals("S"))
+				return;
+				
+			while(Integer.parseInt(idadeUser) < 0) {
+				System.out.println("Idade inválida!");
+				idadeUser = sc.nextLine();
+				if(idadeUser.toUpperCase().equals("S"))
+					return;
+			}
+			novo = new Passageiro(nomeUser, Integer.parseInt(idadeUser));
 		}
 		
 		users.add(novo);
@@ -532,7 +545,7 @@ public class Sistema {
 		
 		ArrayList<Voo> voosAtuais = getVoosAtuais();
 		ArrayList<Voo> matches = (ArrayList<Voo>) voosAtuais.stream()
-				.filter(voo -> voo.getDestino().equals(destinoConst))
+				.filter(voo -> voo.getDestino().equals(destinoConst) && voo.getAviao() != null)
 				.collect(Collectors.toList());
 		
 		while(matches.size() == 0) {
