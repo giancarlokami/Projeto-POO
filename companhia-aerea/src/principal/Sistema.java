@@ -532,7 +532,7 @@ public class Sistema {
 		
 		ArrayList<Voo> voosAtuais = getVoosAtuais();
 		ArrayList<Voo> matches = (ArrayList<Voo>) voosAtuais.stream()
-				.filter(voo -> voo.getDestino().equals(destinoConst))
+				.filter(voo -> voo.getDestino().equals(destinoConst) && voo.getAviao() != null)
 				.collect(Collectors.toList());
 		
 		while(matches.size() == 0) {
