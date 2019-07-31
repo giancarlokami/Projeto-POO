@@ -12,7 +12,6 @@ public class Poltrona implements Serializable {
 	private boolean primeiraClasse;
 	private boolean ocupada;
 	private Usuario dono;
-	private String idade;
 	
 
 	public Poltrona(int numero, String tipo, boolean primeiraClasse) {
@@ -23,9 +22,6 @@ public class Poltrona implements Serializable {
 
 	public Usuario getUsuario() {
 		return dono;
-	}
-	public String getIdade() {
-		return idade;
 	}
 	
 	public int getNumero() {
@@ -47,7 +43,6 @@ public class Poltrona implements Serializable {
 	public void reserva(Usuario user,String idade) {
 		this.ocupada = true;
 		this.dono = user;
-		this.idade = idade;
 		
 	}
 	
@@ -55,7 +50,6 @@ public class Poltrona implements Serializable {
 		if(this.ocupada==true) {
 			this.ocupada = false;
 			this.dono = null;
-			this.idade = null;
 		}
 	}
 	
