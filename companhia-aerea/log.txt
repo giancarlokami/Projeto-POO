@@ -1,0 +1,21 @@
+[01/08/2019 19:20:33] Sistema iniciado.
+[01/08/2019 19:20:33] Usuarios carregados com sucesso.
+[01/08/2019 19:20:33] Voos carregados com sucesso.
+[01/08/2019 19:20:37] Desligando sistema.
+[01/08/2019 19:20:37] Usuarios salvos com sucesso.
+[01/08/2019 19:20:37] Voos salvos com sucesso
+[01/08/2019 19:20:37] Sistema desligou sem erros.
+[01/08/2019 19:20:39] Sistema iniciado.
+[01/08/2019 19:20:39] Usuarios carregados com sucesso.
+[01/08/2019 19:20:39] Voos carregados com sucesso.
+[01/08/2019 19:20:43] Desligando sistema.
+[01/08/2019 19:20:43] Usuarios salvos com sucesso.
+[01/08/2019 19:20:43] Voos salvos com sucesso
+[01/08/2019 19:20:43] Sistema desligou sem erros.
+[01/08/2019 19:20:45] Sistema iniciado.
+[01/08/2019 19:20:45] Usuarios carregados com sucesso.
+[01/08/2019 19:20:45] Voos carregados com sucesso.
+[01/08/2019 19:20:55] Desligando sistema.
+[01/08/2019 19:20:55] Usuarios salvos com sucesso.
+[01/08/2019 19:20:55] Voos salvos com sucesso
+[01/08/2019 19:20:55] Sistema desligou sem erros.

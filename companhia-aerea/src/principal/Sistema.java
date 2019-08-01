@@ -246,7 +246,15 @@ public class Sistema {
 				+ "|- 4. Fazer login (eh necessario para buscar os voos)\n"
 				+ "|- 5. Sair\n";
 			
-			escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, "Menu Principal", JOptionPane.PLAIN_MESSAGE));
+			try {
+				escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, "Menu Principal", JOptionPane.PLAIN_MESSAGE));
+			} catch(NumberFormatException e) {
+				if(e.getMessage().contentEquals("null")) {
+					escolha = 5;
+				} else {
+					continue;
+				}
+			}
 			
 			switch(escolha) {
 			case 1:
