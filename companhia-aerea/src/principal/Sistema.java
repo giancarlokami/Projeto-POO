@@ -481,7 +481,12 @@ public class Sistema {
 				menuMudaNome(atendente);
 				break;
 			case 6:
-				atendente.criaVoo(avioes);				
+				try {
+					atendente.criaVoo(avioes);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e, "Erro", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				break;
 			case 7:
 				atendente.cancelaVoo(getVoosAtuais());
