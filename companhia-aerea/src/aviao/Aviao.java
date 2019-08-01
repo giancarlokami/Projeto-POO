@@ -26,8 +26,7 @@ public class Aviao implements Serializable {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return nome;
 	}
 	
 	@Override
@@ -40,13 +39,26 @@ public class Aviao implements Serializable {
 	}
 	
 	public void addVoo(Voo voo) throws HorarioIndisponivelException {
-		for(Voo vooat : voos) {
-			if(voo.getData()==vooat.getData() && voo.getHora() == vooat.getHora());{
-				throw new HorarioIndisponivelException(this, voo);
-				
+		if (voos.size() > 0) {
+			for(Voo vooat : voos) {
+				if(voo.getData() == vooat.getData() && voo.getHora() == vooat.getHora()){
+					throw new HorarioIndisponivelException(this, voo);
+				}
 			}
 		}
 		this.voos.add(voo);
+	}
+	
+	public boolean verificaDisponibilidade(Voo voo) {
+		if (voos.size() == 0) {
+			return true;
+		}
+		for (Voo v : voos) {
+			if (v.getData() == voo.getData() && v.getHora() == voo.getHora()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public void removeVoo(Voo voo) {

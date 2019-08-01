@@ -71,10 +71,8 @@ public class Voo implements Serializable {
 			aviao.addVoo(this);
 			this.aviao = aviao;
 		} catch (HorarioIndisponivelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
 	}
 
 	public void inicializaPoltronas() {
@@ -95,17 +93,17 @@ public class Voo implements Serializable {
 	}
 	
 	public ArrayList<Poltrona> getPoltronasLivresPrimeiraClasse() {
-		return (ArrayList<Poltrona>) poltronas.stream().filter(p -> !p.estaOcupada() && p.ehPrimeiraClasse()).collect(Collectors.toList());
+		return (ArrayList<Poltrona>) getPoltronas().stream().filter(p -> !p.estaOcupada() && p.ehPrimeiraClasse()).collect(Collectors.toList());
 	}
 	
 	public ArrayList<Poltrona> getPoltronasLivresEconomica() {
-		return (ArrayList<Poltrona>) poltronas.stream().filter(p -> !p.estaOcupada() && !p.ehPrimeiraClasse()).collect(Collectors.toList());
+		return (ArrayList<Poltrona>) getPoltronas().stream().filter(p -> !p.estaOcupada() && !p.ehPrimeiraClasse()).collect(Collectors.toList());
 	}
 	
 	public int getQtdPassageirosABordo() {
 		int count = 0;
 		for(int i=0;i<110;i++) {
-			if(!poltronas.get(i).estaOcupada()) count++;
+			if(poltronas.get(i).estaOcupada()) count++;
 		}
 		return count;
 	}
@@ -114,5 +112,18 @@ public class Voo implements Serializable {
 		return poltronas;
 	}
 	
+	public double getValorTotalClasseEconomica() {
+		int qtdEcon = getPoltronas().stream().filter(p -> !p.ehPrimeiraClasse() && p.estaOcupada()).collect(Collectors.toList()).size();
+		return qtdEcon * getPrecoClasseEconomica();
+	}
+	
+	public double getValorTotalPrimeiraClasse() {
+		int qtdPrim = getPoltronas().stream().filter(p -> p.ehPrimeiraClasse() && p.estaOcupada()).collect(Collectors.toList()).size();
+		return qtdPrim * getPrecoPrimeiraClasse();
+	}
+	
+	public double getValorTotal() {
+		return getValorTotalClasseEconomica() + getValorTotalPrimeiraClasse();
+	}
 	
 }

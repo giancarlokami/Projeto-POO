@@ -2,8 +2,8 @@ package principal;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.stream.Collectors;
+import javax.swing.*;
 
 import aviao.Aviao;
 import aviao.Voo;
@@ -20,14 +20,12 @@ public class Sistema {
 	private static GerenciadorArquivos<Usuario> gerenciadorUsuarios;
 	private static GerenciadorArquivos<Voo> gerenciadorVoos;
 	private static GerenciadorLog log;
-	private static Scanner sc;
 	
 	public static void main(String[] args) {
 		try {
 			log = GerenciadorLog.getInstancia();
 			gerenciadorUsuarios = new GerenciadorArquivos<>("users", Usuario.class);
 			gerenciadorVoos = new GerenciadorArquivos<>("voos", Voo.class);
-			sc = new Scanner(System.in);
 		} catch (IOException e) {
 			System.out.println("Erro ao carregar um dos arquivos.");
 			e.printStackTrace();
@@ -174,9 +172,10 @@ public class Sistema {
 	}
 	
 	private static void desliga() {
-		System.out.println("Desconectando.");
+		String msg;
+		msg = "Desconectando.";
+		JOptionPane.showMessageDialog(null, msg, "Saindo", JOptionPane.PLAIN_MESSAGE);
 		log.registrarAcao("Desligando sistema.");
-		sc.close();
 		
 		try {
 			salvaUsuarios();
@@ -190,7 +189,8 @@ public class Sistema {
 		try {
 			log.close();
 		} catch(Exception e) {
-			System.out.println("Erro ao fechar log.");
+			msg = "Erro ao fechar log.";
+			JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
 		}	
 	}	
 	
@@ -217,30 +217,36 @@ public class Sistema {
 	}
 	
 	private static void mensagemBoasVindas() {
-		System.out.println("            ______                                             ");
-		System.out.println("            _\\ _~-\\___                                       ");
-		System.out.println("    =  = ==(___UFABC__D                                        ");
-		System.out.println("                \\_____\\___________________,-~~~~~~~`-.._     ");
-		System.out.println("                /     o O o o o o O O o o o o o o O o  |\\_    ");
-		System.out.println("                `~-.__        ___..----..                  )   ");
-		System.out.println("                      `---~~\\___________/------------`````    ");
-		System.out.println("                      =  ===(_________D                        ");
-		System.out.println("\nSeja bem vindo(a) a UFABC Airlines.");
+        String html = "<html><body>"
+        			+ "<h3>Seja bem vindo(a) a UFABC Airlines!</h3>"
+					+ "<pre>            ______                                        <br>"
+					+ "            _\\ _~-\\___                                       <br>"
+					+ "    =  = ==(___UFABC__D                                        <br>"
+					+ "                \\_____\\___________________,-~~~~~~~`-.._     <br>"
+					+ "                /     o O o o o o O O o o o o o o O o  |\\_    <br>"
+					+ "                `~-.__        ___..----..                  )   <br>"
+					+ "                      `---~~\\___________/------------`````    <br>"
+					+ "                      =  ===(_________D                        <br>"
+					+ "<br><br><p width='400px' align='center'> Clique em OK para continuar"
+					+ "</body></html>\n"
+					+ "\n";
+		
+		JOptionPane.showMessageDialog(null, html, "Bem-vindo(a)", JOptionPane.PLAIN_MESSAGE);
 	}
 	
 	private static void menuPrincipal() {
 		mensagemBoasVindas();
 		int escolha = 0;
-		
+		String msg;
 		while(escolha != 5) {
-			System.out.println("\nEscolha uma opcao:");
-			System.out.println("|- 1. Cadastrar um novo usuario");
-			System.out.println("|- 2. Remover um usuario");
-			System.out.println("|- 3. Exibir usuarios cadastrados");
-			System.out.println("|- 4. Fazer login (eh necessario para buscar os voos)");
-			System.out.println("|- 5. Sair");
+			msg = "Escolha uma opcao:\n"
+				+ "|- 1. Cadastrar um novo usuario\n"
+				+ "|- 2. Remover um usuario\n"
+				+ "|- 3. Exibir usuarios cadastrados\n"
+				+ "|- 4. Fazer login (eh necessario para buscar os voos)\n"
+				+ "|- 5. Sair\n";
 			
-			escolha = sc.nextInt();
+			escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, "Menu Principal", JOptionPane.PLAIN_MESSAGE));
 			
 			switch(escolha) {
 			case 1:
@@ -251,9 +257,14 @@ public class Sistema {
 				break;
 			case 3:
 				if(users.size() == 0) {
-					System.out.println("Nao ha usuarios cadastrados");
+					msg = "Nao ha usuarios cadastrados";
+					JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
 				} else {
-					users.forEach(u -> System.out.println(u));
+					msg = "";
+					for (Usuario u : users) { 
+						msg += u + "\n";
+					}
+					JOptionPane.showMessageDialog(null, msg, "Usuarios", JOptionPane.PLAIN_MESSAGE);
 				}
 				break;
 			case 4:
@@ -262,7 +273,8 @@ public class Sistema {
 			case 5:
 				break;
 			default:
-				System.out.println("Escolha invalida.");
+				msg = "Escolha invalida.";
+				JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
 				break;
 			}
 		}
@@ -271,33 +283,34 @@ public class Sistema {
 	}
 
 	private static void menuCadastroUsuario() {
+		String msg;
 		char tipoUser;
 		String nomeUser;
 		String idadeUser;
 		Usuario novo;
 		
-		System.out.println("Digite o tipo de usuario(A para Atendente, P para passageiro), ou digite 'S' para voltar:");
-		tipoUser = sc.next().toUpperCase().charAt(0);
+		msg = "Digite o tipo de usuario(A para Atendente, P para passageiro), ou digite 'S' para voltar:";
+		tipoUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE).toUpperCase().charAt(0);
 		
 		while(tipoUser != 'A' && tipoUser != 'P' && tipoUser != 'S') {
-			System.out.println("Opcao invalida, digite A para Atendente, P para passageiro ou 'S' para voltar");
-			tipoUser = sc.next().toUpperCase().charAt(0);
+			msg = "Opcao invalida, digite A para Atendente, P para passageiro ou 'S' para voltar";
+			tipoUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE).toUpperCase().charAt(0);
 		}
 		
 		if(tipoUser == 'S') {
 			return;
 		}
 		
-		System.out.println("Digite nome do usuario, use '-' ou '_' no lugar de espacos, ou 'S' para voltar:");
-		nomeUser = sc.next().replaceAll("[_-]", " ");
+		msg = "Digite nome do usuario, use '-' ou '_' no lugar de espacos, ou 'S' para voltar:";
+		nomeUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
 		
 		if(nomeUser.toUpperCase().equals("S")) {
 			return;
 		}
 		
 		while(buscaUsuario(nomeUser) != null) {
-			System.out.println("Nome ja esta sendo utilizado, digite um nome diferente ou 'S' para voltar");
-			nomeUser = sc.next().replaceAll("[_-]", " ");
+			msg = "Nome ja esta sendo utilizado, digite um nome diferente ou 'S' para voltar";
+			nomeUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
 			
 			if(nomeUser.toUpperCase().equals("S")) {
 				return;
@@ -307,15 +320,15 @@ public class Sistema {
 		if(tipoUser == 'A') {
 			novo = new Atendente(nomeUser);
 		} else {
-			System.out.println("Digite a idade do usuario, ou 'S' para voltar:");
-			idadeUser = sc.next();
+			msg = "Digite a idade do usuario, ou 'S' para voltar:";
+			idadeUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE);
 			
 			if(idadeUser.toUpperCase().equals("S"))
 				return;
 				
 			while(Integer.parseInt(idadeUser) < 0) {
-				System.out.println("Idade inválida!");
-				idadeUser = sc.nextLine();
+				msg = "Idade inválida!";
+				idadeUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE);
 				if(idadeUser.toUpperCase().equals("S"))
 					return;
 			}
@@ -323,13 +336,15 @@ public class Sistema {
 		}
 		
 		users.add(novo);
-		System.out.println("Usuario adicionado com sucesso");
+		msg = "Usuario adicionado com sucesso";
+		JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.PLAIN_MESSAGE);
 		log.registrarAcao("Novo usuario adicionado: " + nomeUser);
 	}
 	
 	private static void menuRemoveUsuario() {
-		System.out.println("Digite o nome do usuario que sera removido, use '-' ou '_' no lugar de espacos, ou 'S' para voltar:");
-		String nome = sc.next().replaceAll("[_-]", " ");
+		String msg;
+		msg = "Digite o nome do usuario que sera removido, use '-' ou '_' no lugar de espacos, ou 'S' para voltar:";
+		String nome = JOptionPane.showInputDialog(null, msg, "Remover Usuario", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
 		
 		if(nome.toUpperCase().equals("S")) {
 			return;
@@ -338,8 +353,8 @@ public class Sistema {
 		Usuario user = buscaUsuario(nome);
 		
 		while(user == null) {
-			System.out.println("Nao existe nenhum usuario com esse nome, digite um nome diferente ou 'S' para voltar");
-			nome = sc.next().replaceAll("[_-]", " ");
+			msg = "Nao existe nenhum usuario com esse nome, digite um nome diferente ou 'S' para voltar";
+			nome = JOptionPane.showInputDialog(null, msg, "Remover Usuario", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
 			
 			if(nome.toUpperCase().equals("S")) {
 				return;
@@ -347,17 +362,19 @@ public class Sistema {
 		}
 		
 		users.remove(user);
-		System.out.println("Usuario removido com sucesso");
+		msg = "Usuario removido com sucesso";
+		JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.PLAIN_MESSAGE);
 		log.registrarAcao("Usurario removido: " + nome);
 		
 	}
 	
 	private static void menuLogin() {
+		String msg;
 		String nome = "";
 		
 		while(nome != null && !nome.toUpperCase().equals("S")) {
-			System.out.println("Digite o seu nome, use '-' ou '_' no lugar de espacos, ou digite 'S' para voltar:");
-			nome = sc.next().replaceAll("[_-]", " ");
+			msg = "Digite o seu nome, use '-' ou '_' no lugar de espacos, ou digite 'S' para voltar:";
+			nome = JOptionPane.showInputDialog(null, msg, "Logar", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
 			Usuario user = buscaUsuario(nome);
 			
 			if(!nome.toUpperCase().equals("S") && user != null) {
@@ -369,25 +386,28 @@ public class Sistema {
 					return;
 				}
 			} else if (!nome.toUpperCase().equals("S")) {
-				System.out.println("Usuario nao cadastrado.");
+				msg = "Usuario nao cadastrado.";
+				JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
 	
 	private static void menuPassageiro(Usuario usuario) {
-		System.out.println("Seja bem vindo(a) " + usuario.getNome());
+		String msg;
+		msg = "Seja bem vindo(a) " + usuario.getNome();
 		int escolha = 0;
 		
 		while(escolha != 6) {
-			System.out.println("Escolha uma opcao:");
-			System.out.println("|- 1. Consultar reservas");
-			System.out.println("|- 2. Cancelar reserva");
-			System.out.println("|- 3. Pagar reserva");
-			System.out.println("|- 4. Procurar voo");
-			System.out.println("|- 5. Alterar nome");
-			System.out.println("|- 6. Voltar");
+			msg = "Escolha uma opcao:\n"
+				+ "|- 1. Consultar reservas\n"
+				+ "|- 2. Cancelar reserva\n"
+				+ "|- 3. Pagar reserva\n"
+				+ "|- 4. Procurar voo\n"
+				+ "|- 5. Alterar nome\n"
+				+ "|- 6. Voltar";
 			
-			escolha = sc.nextInt();
+			
+			escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, "Menu de Passageiro", JOptionPane.PLAIN_MESSAGE));
 			
 			switch(escolha) {
 			case 1:
@@ -413,29 +433,31 @@ public class Sistema {
 			case 6:
 				break;
 			default:
-				System.out.println("Escolha invalida.");
+				msg = "Escolha invalida.";
+				JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
 				break;
 			}
 		}
 	}
 	
 	private static void menuAtendente(Atendente atendente) {
-		System.out.println("Seja bem vindo(a) " + atendente.getNome());
+		String msg;
+		msg = "Seja bem vindo(a) " + atendente.getNome();
 		int escolha = 0;
 		
 		while(escolha != 9) {
-			System.out.println("Escolha uma opcao:");
-			System.out.println("|- 1. Consultar reservas");
-			System.out.println("|- 2. Cancelar reserva");
-			System.out.println("|- 3. Pagar reserva");
-			System.out.println("|- 4. Procurar voo");
-			System.out.println("|- 5. Alterar nome");
-			System.out.println("|- 6. Criar voo");
-			System.out.println("|- 7. Cancelar voo");
-			System.out.println("|- 8. Gerar relatorio de um voo");
-			System.out.println("|- 9. Voltar");
+			 msg = 	  "Escolha uma opcao:\n"
+					+ "|- 1. Consultar reservas\n"
+					+ "|- 2. Cancelar reserva\n"
+					+ "|- 3. Pagar reserva\n"
+					+ "|- 4. Procurar voo\n"
+					+ "|- 5. Alterar nome\n"
+					+ "|- 6. Criar voo\n"
+					+ "|- 7. Cancelar voo\n"
+					+ "|- 8. Gerar relatorio de um voo\n"
+					+ "|- 9. Voltar\n";
 			
-			escolha = sc.nextInt();
+			escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, "Menu de Atendente", JOptionPane.PLAIN_MESSAGE));
 			
 			switch(escolha) {
 			case 1:
@@ -459,7 +481,12 @@ public class Sistema {
 				menuMudaNome(atendente);
 				break;
 			case 6:
-				atendente.criaVoo(avioes);				
+				try {
+					atendente.criaVoo(avioes);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e, "Erro", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				break;
 			case 7:
 				atendente.cancelaVoo(getVoosAtuais());
@@ -470,7 +497,8 @@ public class Sistema {
 			case 9:
 				break;
 			default:
-				System.out.println("Escolha invalida.");
+				msg = "Escolha invalida.";
+				JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
 				break;
 			}
 		}
@@ -535,8 +563,9 @@ public class Sistema {
 	}*/
 	
 	private static void menuBuscaVoo(Usuario usuario) {
-		System.out.println("Digite um destino, use '_' ou '-' no lugar de espacos, ou 'S' para voltar: ");
-		String destino = sc.next().replaceAll("[_-]", " ");
+		String msg;
+		msg = "Digite um destino, use '_' ou '-' no lugar de espacos, ou 'S' para voltar: ";
+		String destino = JOptionPane.showInputDialog(null, msg, "Busca de voos", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
 		final String destinoConst = destino;
 		
 		if(destino.toUpperCase().equals("S")) {
@@ -549,8 +578,8 @@ public class Sistema {
 				.collect(Collectors.toList());
 		
 		while(matches.size() == 0) {
-			System.out.println("Nao ha voos para esse destino. Digite um novo destino para continuar buscando ou 'S' para sair");
-			destino = sc.next().replaceAll("[_-]", " ");
+			msg = "Nao ha voos para esse destino. Digite um novo destino para continuar buscando ou 'S' para sair";
+			destino = JOptionPane.showInputDialog(null, msg).replaceAll("[_-]", " ");
 			final String destinoFinal = destino;
 			
 			if(destino.toUpperCase().equals("S")) {
@@ -562,17 +591,18 @@ public class Sistema {
 					.collect(Collectors.toList());
 		}
 		
-		System.out.println("Os voos disponiveis para esse destino sao, Escolha um, ou digite -1 para sair:");
+		msg = "Os voos disponiveis para esse destino sao:\n"
+			+ "Escolha um, ou digite -1 para sair:\n";
 		
 		for(int i = 0; i < matches.size(); i++) {
-			System.out.println(i + " - " + matches.get(i));
+			msg += "\n" + i + " - " + matches.get(i);
 		}
 		
-		int escolha = sc.nextInt();
+		int escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE));
 		
 		while(escolha < -1 || escolha >= matches.size()) {
-			System.out.println("Escolha algo entre 1 e " + matches.size());
-			escolha = sc.nextInt();
+			msg = "Escolha algo entre 1 e " + matches.size();
+			escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE));
 		}
 		
 		if(escolha == -1) {
@@ -583,22 +613,24 @@ public class Sistema {
 	}
 	
 	private static void menuMudaNome(Usuario usuario) {
-		System.out.println("Digite um novo nome, use '-' ou '_' no lugar de espacos, ou 'S' para voltar:");
-		String novoNome = sc.next().replaceAll("[_-]", " ");
+		String msg;
+		msg = "Digite um novo nome, use '-' ou '_' no lugar de espacos, ou 'S' para voltar:";
+		String novoNome = JOptionPane.showInputDialog(null, msg, "Mudar Nome", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
 		
 		if(novoNome.toUpperCase().equals("S")) {
 			return;
 		}
 		
 		while(buscaUsuario(novoNome) != null) {
-			System.out.println("Nome ja esta sendo utilizado, digite um nome diferente ou 'S' para voltar)");
-			novoNome = sc.next().replaceAll("[_-]", " ");
+			msg = "Nome ja esta sendo utilizado, digite um nome diferente ou 'S' para voltar: ";
+			novoNome = JOptionPane.showInputDialog(null, msg, "Mudar Nome", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
 			
 			if(novoNome.toUpperCase().equals("S")) {
 				return;
 			}
 		}
-		
+		msg = "Nome alterado com sucesso!";
+		JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.PLAIN_MESSAGE);
 		usuario.setNome(novoNome);
 	}
 }
