@@ -113,13 +113,15 @@ public class Voo implements Serializable {
 	}
 	
 	public double getValorTotalClasseEconomica() {
-		int qtdEcon = getPoltronas().stream().filter(p -> !p.ehPrimeiraClasse() && p.estaOcupada()).collect(Collectors.toList()).size();
-		return qtdEcon * getPrecoClasseEconomica();
+		int qtdEconAdulto = getPoltronas().stream().filter(p -> !p.ehPrimeiraClasse() && p.estaOcupada()&&p.ehAdulto()).collect(Collectors.toList()).size();
+		int qtdEconCrianca = getPoltronas().stream().filter(p -> !p.ehPrimeiraClasse() && p.estaOcupada()&&!p.ehAdulto()).collect(Collectors.toList()).size();
+		return (qtdEconAdulto * getPrecoClasseEconomica())+(qtdEconCrianca*getPrecoClasseEconomica()*0.5);
 	}
 	
 	public double getValorTotalPrimeiraClasse() {
-		int qtdPrim = getPoltronas().stream().filter(p -> p.ehPrimeiraClasse() && p.estaOcupada()).collect(Collectors.toList()).size();
-		return qtdPrim * getPrecoPrimeiraClasse();
+		int qtdPrimAdulto = getPoltronas().stream().filter(p -> p.ehPrimeiraClasse() && p.estaOcupada()&&p.ehAdulto()).collect(Collectors.toList()).size();
+		int qtdPrimCrianca = getPoltronas().stream().filter(p -> p.ehPrimeiraClasse() && p.estaOcupada()&&!p.ehAdulto()).collect(Collectors.toList()).size();
+		return (qtdPrimAdulto * getPrecoPrimeiraClasse())+(qtdPrimCrianca * getPrecoPrimeiraClasse() * 0.5);
 	}
 	
 	public double getValorTotal() {
