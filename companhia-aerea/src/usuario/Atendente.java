@@ -18,7 +18,7 @@ public class Atendente extends Usuario {
 	private static final long serialVersionUID = 1L;
 
 	public Atendente(String nome) {
-		super(nome);
+		super(nome,20);
 	}
 	
 	public void geraRelatorio(ArrayList<Voo> voos){
@@ -193,6 +193,7 @@ public class Atendente extends Usuario {
 		}
 		aviao = disponiveis.get(Integer.parseInt(in));
 		voo.setAviao(aviao);
+		aviao.addVoo(voo);
 		msg = "Voo criado com sucesso!";
 		JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.PLAIN_MESSAGE);
 	}

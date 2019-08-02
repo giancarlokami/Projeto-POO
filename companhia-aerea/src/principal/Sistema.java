@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import aviao.Aviao;
 import aviao.Voo;
+import exceptions.AssentoOcupadoException;
 import exceptions.HorarioIndisponivelException;
 import usuario.Atendente;
 import usuario.Passageiro;
@@ -609,7 +610,52 @@ public class Sistema {
 			return;
 		}
 		
-		usuario.reservaVoo(matches.get(escolha));
+		menuReserva(matches.get(escolha),usuario);
+	}
+	
+	private static void menuReserva(Voo voo, Usuario user) {
+		
+		String msg;
+		
+		msg = "Escolha um assento, ou digite 'S' para sair: ";
+		String nAssento = JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE);
+		
+		if(nAssento.toUpperCase().equals("S")) {
+			return;
+		}
+		
+		while (Integer.parseInt(nAssento)<0&&Integer.parseInt(nAssento)>110){
+			msg = "Assento nao existe"; 
+			nAssento = JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE);
+			if(nAssento.toUpperCase().equals("S")) {
+				return;
+			}
+		}
+		
+		if(Integer.parseInt(nAssento)-1>20) {
+			try {
+				voo.getPoltronas().get(Integer.parseInt(nAssento)-1).reserva(user, user.getIdade(), false);
+			} catch (NumberFormatException | AssentoOcupadoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			try {
+				voo.getPoltronas().get(Integer.parseInt(nAssento)-1).reserva(user, user.getIdade(), true);
+			} catch (NumberFormatException | AssentoOcupadoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		msg = "Assento reservado com sucesso";
+		JOptionPane.showMessageDialog(null,msg);
+		msg = "Deseja reservar outro assento, caso não digite 'S' para sair: ";
+		String outra = JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE);
+		
+		if(outra.toUpperCase().equals("S")) {
+			return;
+		}else menuReserva(voo,user);
+		
 	}
 	
 	private static void menuMudaNome(Usuario usuario) {
