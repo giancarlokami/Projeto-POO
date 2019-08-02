@@ -11,6 +11,7 @@ import exceptions.HorarioIndisponivelException;
 import usuario.Atendente;
 import usuario.Passageiro;
 import usuario.Usuario;
+import view.ViewMenuPrincipal;
 
 public class Sistema {
 	
@@ -47,7 +48,8 @@ public class Sistema {
 		log.registrarAcao("Sistema iniciado.");
 		carregaUsuarios();
 		carregaAvioes();
-		menuPrincipal();
+		new ViewMenuPrincipal().setVisible(true);
+		//menuPrincipal();
 	}
 	
 	private static void salvaUsuarios() throws IOException {
@@ -171,10 +173,10 @@ public class Sistema {
 		}
 	}
 	
-	private static void desliga() {
+	public static void desliga() {
 		String msg;
 		msg = "Desconectando.";
-		JOptionPane.showMessageDialog(null, msg, "Saindo", JOptionPane.PLAIN_MESSAGE);
+		mostraAviso(msg, JOptionPane.INFORMATION_MESSAGE);
 		log.registrarAcao("Desligando sistema.");
 		
 		try {
@@ -190,7 +192,7 @@ public class Sistema {
 			log.close();
 		} catch(Exception e) {
 			msg = "Erro ao fechar log.";
-			JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
+			mostraAviso(msg, JOptionPane.ERROR_MESSAGE);
 		}	
 	}	
 	
@@ -200,7 +202,6 @@ public class Sistema {
 				return u;
 			}
 		}
-		
 		return null;
 	}
 	
@@ -632,5 +633,90 @@ public class Sistema {
 		msg = "Nome alterado com sucesso!";
 		JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.PLAIN_MESSAGE);
 		usuario.setNome(novoNome);
+	}
+	
+	public static boolean validaCadastroAtendente(String nome) {
+		if (nome.isBlank() || nome.isEmpty()) {
+			throw new IllegalArgumentException("Nome inválido!");
+		}
+		if (buscaUsuario(nome) != null) {
+			throw new IllegalArgumentException("Nome já está em uso!");
+		}
+		return true;
+	}
+	
+	public static void cadastraAtendente(String nome) {
+		Usuario novo = new Atendente(nome);
+		users.add(novo);
+		log.registrarAcao("Novo atendente adicionado: " + nome);
+	}
+	
+	public static boolean validaCadastroPassageiro(String nome, int idade) {
+		if (nome.isBlank() || nome.isEmpty()) {
+			throw new IllegalArgumentException("Nome inválido!");
+		}
+		if (buscaUsuario(nome) != null) {
+			throw new IllegalArgumentException("Nome já está em uso!");
+		}
+		return true;
+	}
+	
+	public static void cadastraPassageiro(String nome, int idade) {
+		Usuario novo = new Passageiro(nome, idade);
+		users.add(novo);
+		log.registrarAcao("Novo passageiro adicionado: " + nome);
+	}
+	
+	public static String[] getNomeUsuarios() {
+		String[] usuarios = new String[users.size()];
+		for(Usuario u : users) {
+			if (u instanceof Atendente) {
+				usuarios[users.indexOf(u)] = "Atendente: " + u.getNome();
+			} else {
+				usuarios[users.indexOf(u)] = "Passageiro: " + u.getNome() + " | Idade: " + u.getIdade();
+			}
+		}
+		return usuarios;
+	}
+	
+	public static int getQtdUsuarios() {
+		return users.size();
+	}
+	
+	public static void removeUsuario(String nome) {
+		Usuario user = buscaUsuario(nome);
+		users.remove(user);
+		mostraAviso("Usuario removido com sucesso", JOptionPane.PLAIN_MESSAGE);
+		log.registrarAcao("Usurario removido: " + user.getNome());
+	}
+	
+	public static boolean validaLogin(String nome) {
+		Usuario user = buscaUsuario(nome);
+		if (user == null) {
+			throw new IllegalArgumentException("Usuário não cadastrado!");
+		}
+		return true;
+	}
+	
+	public static String fazLogin(String nome) {
+		Usuario user = buscaUsuario(nome);
+		if (user instanceof Atendente) {
+			return "Atendente";
+		}
+		return "Passageiro";
+	}
+	
+	public static void mostraAviso(String message, int type) {
+		switch (type) {
+			case JOptionPane.ERROR_MESSAGE:
+				JOptionPane.showMessageDialog(null, message, "Erro", type);
+				break;
+			case JOptionPane.PLAIN_MESSAGE:
+				JOptionPane.showMessageDialog(null, message, "Sucesso", type);
+				break;
+			default:
+				JOptionPane.showMessageDialog(null, message, "Aviso", JOptionPane.INFORMATION_MESSAGE);
+				break;
+		}
 	}
 }
