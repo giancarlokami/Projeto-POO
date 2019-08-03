@@ -46,12 +46,25 @@ public abstract class Usuario implements Serializable {
 		return false;
 	}
 	
-	public void reservaVoo(Poltrona poltrona) {
-		this.reservadas.add(poltrona);
+	public void consultaResrvas() {
+		
+	}
+	
+	public void pagaReserva() {
+		
 	}
 	
 	public void cancelaReserva(Poltrona poltrona) {
 		this.reservadas.remove(poltrona);
+	}
+	
+	
+	public void alteraNome() {
+		
+	}
+	
+	public void reservaVoo(Poltrona poltrona) {
+		this.reservadas.add(poltrona);
 	}
 	
 	public void imprimeReservas() {
