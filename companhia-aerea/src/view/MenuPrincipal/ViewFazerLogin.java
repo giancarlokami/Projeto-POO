@@ -1,6 +1,5 @@
-package view;
+package view.MenuPrincipal;
 
-import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -9,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import principal.Sistema;
+import view.MenuAtendente.ViewMenuAtendente;
+import view.MenuPassageiro.ViewMenuPassageiro;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
