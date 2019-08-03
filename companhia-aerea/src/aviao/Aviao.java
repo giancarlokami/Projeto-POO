@@ -3,8 +3,6 @@ package aviao;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import exceptions.HorarioIndisponivelException;
-
 public class Aviao implements Serializable {
 
 	private static final long serialVersionUID = -5348639226293092840L;
@@ -38,14 +36,7 @@ public class Aviao implements Serializable {
 		return false;
 	}
 	
-	public void addVoo(Voo voo) throws HorarioIndisponivelException {
-		if (voos.size() > 0) {
-			for(Voo vooat : voos) {
-				if(voo.getData() == vooat.getData() && voo.getHora() == vooat.getHora()){
-					throw new HorarioIndisponivelException(this, voo);
-				}
-			}
-		}
+	public void addVoo(Voo voo) {
 		this.voos.add(voo);
 	}
 	
@@ -54,7 +45,7 @@ public class Aviao implements Serializable {
 			return true;
 		}
 		for (Voo v : voos) {
-			if (v.getData() == voo.getData() && v.getHora() == voo.getHora()) {
+			if (v.getData().equals(voo.getData()) && v.getHora().equals(voo.getHora())) {
 				return false;
 			}
 		}

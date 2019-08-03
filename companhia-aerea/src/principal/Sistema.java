@@ -1,6 +1,8 @@
 package principal;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import javax.swing.*;
@@ -8,11 +10,10 @@ import javax.swing.*;
 import aviao.Aviao;
 import aviao.Voo;
 import exceptions.AssentoOcupadoException;
-import exceptions.HorarioIndisponivelException;
 import usuario.Atendente;
 import usuario.Passageiro;
 import usuario.Usuario;
-import view.ViewMenuPrincipal;
+import view.MenuPrincipal.ViewMenuPrincipal;
 
 public class Sistema {
 	
@@ -22,6 +23,7 @@ public class Sistema {
 	private static GerenciadorArquivos<Usuario> gerenciadorUsuarios;
 	private static GerenciadorArquivos<Voo> gerenciadorVoos;
 	private static GerenciadorLog log;
+	private static Usuario usuarioAtual;
 	
 	public static void main(String[] args) {
 		try {
@@ -125,8 +127,6 @@ public class Sistema {
 				
 				log.registrarAcao("Erro ao ler voos, causa:");
 				log.registrarAcao(e.getStackTrace().toString());
-			} catch (HorarioIndisponivelException e) {
-				log.registrarAcao("Voo invalido encontrado no arquivo.");
 			} catch (Exception e) {
 				System.out.println("Erro inesperado");
 				e.printStackTrace();
@@ -206,17 +206,7 @@ public class Sistema {
 		return null;
 	}
 	
-	private static ArrayList<Voo> getVoosAtuais() {
-		ArrayList<Voo> voos = new ArrayList<>();
-		
-		for(Aviao aviao : avioes) {
-			if(aviao.getVoos() != null) {
-				voos.addAll(aviao.getVoos());
-			}
-		}
-		
-		return voos;
-	}
+	
 	
 	private static void mensagemBoasVindas() {
         String html = "<html><body>"
@@ -650,7 +640,7 @@ public class Sistema {
 		}
 		msg = "Assento reservado com sucesso";
 		JOptionPane.showMessageDialog(null,msg);
-		msg = "Deseja reservar outro assento, caso n�o digite 'S' para sair: ";
+		msg = "Deseja reservar outro assento, caso n�o digite 'S' para sair: ";
 		String outra = JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE);
 		
 		if(outra.toUpperCase().equals("S")) {
@@ -681,36 +671,34 @@ public class Sistema {
 		usuario.setNome(novoNome);
 	}
 	
-	public static boolean validaCadastroAtendente(String nome) {
+	public static Atendente validaCadastroAtendente(String nome) {
 		if (nome.isBlank() || nome.isEmpty()) {
 			throw new IllegalArgumentException("Nome inválido!");
 		}
 		if (buscaUsuario(nome) != null) {
 			throw new IllegalArgumentException("Nome já está em uso!");
 		}
-		return true;
+		return new Atendente(nome);
 	}
 	
-	public static void cadastraAtendente(String nome) {
-		Usuario novo = new Atendente(nome);
-		users.add(novo);
-		log.registrarAcao("Novo atendente adicionado: " + nome);
+	public static void cadastraAtendente(Atendente atendente) {
+		users.add(atendente);
+		log.registrarAcao("Novo atendente adicionado: " + atendente.getNome());
 	}
 	
-	public static boolean validaCadastroPassageiro(String nome, int idade) {
+	public static Passageiro validaCadastroPassageiro(String nome, int idade) {
 		if (nome.isBlank() || nome.isEmpty()) {
 			throw new IllegalArgumentException("Nome inválido!");
 		}
 		if (buscaUsuario(nome) != null) {
 			throw new IllegalArgumentException("Nome já está em uso!");
 		}
-		return true;
+		return new Passageiro(nome, idade);
 	}
 	
-	public static void cadastraPassageiro(String nome, int idade) {
-		Usuario novo = new Passageiro(nome, idade);
-		users.add(novo);
-		log.registrarAcao("Novo passageiro adicionado: " + nome);
+	public static void cadastraPassageiro(Passageiro passageiro) {
+		users.add(passageiro);
+		log.registrarAcao("Novo passageiro adicionado: " + passageiro.getNome());
 	}
 	
 	public static String[] getNomeUsuarios() {
@@ -746,10 +734,65 @@ public class Sistema {
 	
 	public static String fazLogin(String nome) {
 		Usuario user = buscaUsuario(nome);
+		usuarioAtual = user;
 		if (user instanceof Atendente) {
 			return "Atendente";
 		}
 		return "Passageiro";
+	}
+	
+	public static ArrayList<Voo> getVoosAtuais() {
+		ArrayList<Voo> voos = new ArrayList<>();
+		for(Aviao aviao : avioes) {
+			if(aviao.getVoos() != null) {
+				voos.addAll(aviao.getVoos());
+			}
+		}
+		return voos;
+	}
+	
+	public static int getQtdVoos() {
+		return getVoosAtuais().size();
+	}
+	
+	public static int getQtdAvioes() {
+		return avioes.size();
+	}
+	
+	public static ArrayList<Aviao> getAvioesDisponiveis(LocalDate data, LocalTime hora) {
+		Voo voo = new Voo(data, hora, "", "", 0f, 0f);
+		ArrayList<Aviao> disponiveis = (ArrayList<Aviao>) avioes.stream().filter(a -> a.verificaDisponibilidade(voo)).collect(Collectors.toList());
+		return disponiveis;
+	}
+	
+	public static Voo validaCriacaoVoo(String origem, String destino, LocalDate data, LocalTime hora, double precoPrimeiraClasse, double precoClasseEconomica, Aviao aviao) {
+		if (data.isBefore(LocalDate.now())) {
+			throw new IllegalArgumentException("Data inválida!");
+		}
+		if (data == LocalDate.now() && hora.isBefore(LocalTime.now())) {
+			throw new IllegalArgumentException("Hora inválida!");
+		}
+		if (origem.isBlank() || origem.isEmpty()) {
+			throw new IllegalArgumentException("Origem inválida!");
+		}
+		if (destino.isBlank() || destino.isEmpty()) {
+			throw new IllegalArgumentException("Destino inválido!");
+		}
+		if (aviao == null || !avioes.contains(aviao)) {
+			throw new IllegalArgumentException("È preciso selecionar um aviao!");
+		}
+		if (precoPrimeiraClasse < 0) {
+			throw new IllegalArgumentException("Preço da primeira classe inválido!");
+		}
+		if (precoClasseEconomica < 0) {
+			throw new IllegalArgumentException("Preço da classe econômica inválido!");
+		}
+		return new Voo(data, hora, origem, destino, precoPrimeiraClasse, precoClasseEconomica);
+	}
+	
+	public static void criaVoo(Voo voo, Aviao aviao) {
+		voo.setAviao(avioes.get(avioes.indexOf(aviao)));
+		log.registrarAcao("Novo voo criado: " + voo);
 	}
 	
 	public static void mostraAviso(String message, int type) {
@@ -764,5 +807,13 @@ public class Sistema {
 				JOptionPane.showMessageDialog(null, message, "Aviso", JOptionPane.INFORMATION_MESSAGE);
 				break;
 		}
+	}
+
+	public static Usuario getUsuarioAtual() {
+		return usuarioAtual;
+	}
+
+	public static void setUsuarioAtual(Usuario usuarioAtual) {
+		Sistema.usuarioAtual = usuarioAtual;
 	}
 }

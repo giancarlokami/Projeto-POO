@@ -10,7 +10,7 @@ public class HorarioIndisponivelException extends Exception{
 	private Aviao aviao;
 	
 	public HorarioIndisponivelException(Aviao aviao, Voo voo) {
-		super("O horario " + voo.getHora() + " do dia " + voo.getData() + " não esta disponivel para o aviao solicitado");
+		super("O horario " + voo.getHora() + " do dia " + voo.getData() + " nao esta disponivel para o aviao solicitado");
 		this.aviao = aviao;
 		this.voo = voo;
 	}
