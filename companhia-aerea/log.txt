@@ -1,0 +1,9 @@
+[03/08/2019 13:53:45] Sistema iniciado.
+[03/08/2019 13:53:45] Usuarios carregados com sucesso.
+[03/08/2019 13:53:45] Voos carregados com sucesso.
+[03/08/2019 13:54:00] Novo atendente adicionado: Fabio Luis
+[03/08/2019 13:54:57] Novo voo criado: Origem: Sao Paulo | Destino: Rio de Janeiro | Data: 03/08/2019:13:54 | Aviao: Aviao0
+[03/08/2019 13:55:32] Desligando sistema.
+[03/08/2019 13:55:32] Usuarios salvos com sucesso.
+[03/08/2019 13:55:32] Voos salvos com sucesso
+[03/08/2019 13:55:32] Sistema desligou sem erros.
