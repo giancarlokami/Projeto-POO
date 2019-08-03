@@ -1,10 +1,13 @@
-package view;
+package view.MenuPrincipal;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import principal.Sistema;
+import usuario.Atendente;
+import usuario.Passageiro;
+
 import java.awt.GridLayout;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
@@ -117,8 +120,8 @@ public class ViewCadastrarUsuario extends JFrame {
 				if (buttonGroup.getSelection() == rdbtnAtendente.getModel()) {
 					try {
 						String nome = txtNome.getText();
-						Sistema.validaCadastroAtendente(nome);
-						Sistema.cadastraAtendente(nome);
+						Atendente atendente = Sistema.validaCadastroAtendente(nome);
+						Sistema.cadastraAtendente(atendente);
 						Sistema.mostraAviso("Atendente cadastrado com sucesso!", JOptionPane.PLAIN_MESSAGE);
 					} catch (Exception e) {
 						Sistema.mostraAviso(e.getMessage(), JOptionPane.ERROR_MESSAGE);
@@ -127,8 +130,8 @@ public class ViewCadastrarUsuario extends JFrame {
 					try {
 						String nome = txtNome.getText();
 						int idade = Integer.parseInt(txtIdade.getText());
-						Sistema.validaCadastroPassageiro(nome, idade);
-						Sistema.cadastraPassageiro(nome, idade);
+						Passageiro passageiro = Sistema.validaCadastroPassageiro(nome, idade);
+						Sistema.cadastraPassageiro(passageiro);
 						Sistema.mostraAviso("Passageiro cadastrado com sucesso!", JOptionPane.PLAIN_MESSAGE);
 					} catch (Exception e) {
 						Sistema.mostraAviso(e.getMessage(), JOptionPane.ERROR_MESSAGE);

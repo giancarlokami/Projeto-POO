@@ -3,10 +3,9 @@ package aviao;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
-import exceptions.HorarioIndisponivelException;
 
 public class Voo implements Serializable {
 
@@ -67,12 +66,8 @@ public class Voo implements Serializable {
 		if(this.aviao != null) {
 			this.aviao.removeVoo(this);
 		}
-		try {
-			aviao.addVoo(this);
-			this.aviao = aviao;
-		} catch (HorarioIndisponivelException e) {
-			e.printStackTrace();
-		}
+		aviao.addVoo(this);
+		this.aviao = aviao;
 	}
 
 	public void inicializaPoltronas() {
@@ -126,6 +121,11 @@ public class Voo implements Serializable {
 	
 	public double getValorTotal() {
 		return getValorTotalClasseEconomica() + getValorTotalPrimeiraClasse();
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Origem: %s | Destino: %s | Data: %s:%s | Aviao: %s", getOrigem(), getDestino(), getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), getHora().format(DateTimeFormatter.ofPattern("HH:mm")), getAviao());
 	}
 	
 }
