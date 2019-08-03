@@ -3,10 +3,9 @@ package aviao;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
-import exceptions.HorarioIndisponivelException;
 
 public class Voo implements Serializable {
 
@@ -67,12 +66,8 @@ public class Voo implements Serializable {
 		if(this.aviao != null) {
 			this.aviao.removeVoo(this);
 		}
-		try {
-			aviao.addVoo(this);
-			this.aviao = aviao;
-		} catch (HorarioIndisponivelException e) {
-			e.printStackTrace();
-		}
+		aviao.addVoo(this);
+		this.aviao = aviao;
 	}
 
 	public void inicializaPoltronas() {
@@ -113,17 +108,24 @@ public class Voo implements Serializable {
 	}
 	
 	public double getValorTotalClasseEconomica() {
-		int qtdEcon = getPoltronas().stream().filter(p -> !p.ehPrimeiraClasse() && p.estaOcupada()).collect(Collectors.toList()).size();
-		return qtdEcon * getPrecoClasseEconomica();
+		int qtdEconAdulto = getPoltronas().stream().filter(p -> !p.ehPrimeiraClasse() && p.estaOcupada()&&p.ehAdulto()).collect(Collectors.toList()).size();
+		int qtdEconCrianca = getPoltronas().stream().filter(p -> !p.ehPrimeiraClasse() && p.estaOcupada()&&!p.ehAdulto()).collect(Collectors.toList()).size();
+		return (qtdEconAdulto * getPrecoClasseEconomica())+(qtdEconCrianca*getPrecoClasseEconomica()*0.5);
 	}
 	
 	public double getValorTotalPrimeiraClasse() {
-		int qtdPrim = getPoltronas().stream().filter(p -> p.ehPrimeiraClasse() && p.estaOcupada()).collect(Collectors.toList()).size();
-		return qtdPrim * getPrecoPrimeiraClasse();
+		int qtdPrimAdulto = getPoltronas().stream().filter(p -> p.ehPrimeiraClasse() && p.estaOcupada()&&p.ehAdulto()).collect(Collectors.toList()).size();
+		int qtdPrimCrianca = getPoltronas().stream().filter(p -> p.ehPrimeiraClasse() && p.estaOcupada()&&!p.ehAdulto()).collect(Collectors.toList()).size();
+		return (qtdPrimAdulto * getPrecoPrimeiraClasse())+(qtdPrimCrianca * getPrecoPrimeiraClasse() * 0.5);
 	}
 	
 	public double getValorTotal() {
 		return getValorTotalClasseEconomica() + getValorTotalPrimeiraClasse();
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Origem: %s | Destino: %s | Data: %s:%s | Aviao: %s", getOrigem(), getDestino(), getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), getHora().format(DateTimeFormatter.ofPattern("HH:mm")), getAviao());
 	}
 	
 }

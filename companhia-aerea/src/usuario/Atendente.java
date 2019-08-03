@@ -18,7 +18,7 @@ public class Atendente extends Usuario {
 	private static final long serialVersionUID = 1L;
 
 	public Atendente(String nome) {
-		super(nome);
+		super(nome,20);
 	}
 	
 	public void geraRelatorio(ArrayList<Voo> voos){
