@@ -73,7 +73,7 @@ public class Voo implements Serializable {
 	}
 
 	public void inicializaPoltronas() {
-		String tipo;
+		String tipo = null;
 		for(int i=1;i<=20;i++) {
 			if(i%4==1||i%4==0) tipo = "Janela";
 			else tipo = "Corredor";
@@ -81,9 +81,9 @@ public class Voo implements Serializable {
 			poltronas.add(pol);
 		}
 		for(int i=21;i<=110;i++) {
-			if(i%6==1||i%6==0) tipo = "Janela";
-			else if(i%6==2||i%6==5) tipo = "Meio";
-			else tipo = "Corredor";
+			if(i%6==2||i%6==3) tipo = "Janela";
+			else if(i%6==4||i%6==1) tipo = "Meio";
+			else if(i%6==0||i%6==5) tipo = "Corredor";
 			Poltrona pol = new Poltrona(i,tipo,false);
 			poltronas.add(pol);
 		}

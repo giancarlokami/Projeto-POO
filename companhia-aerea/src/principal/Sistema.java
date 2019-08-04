@@ -234,6 +234,8 @@ public class Sistema {
 		if (buscaUsuario(nome) != null) {
 			throw new IllegalArgumentException("Nome já está em uso!");
 		}
+		if (idade<12||idade>120)
+			throw new IllegalArgumentException("Idade inv�lida!"); 
 		return new Passageiro(nome, idade);
 	}
 	
@@ -361,6 +363,10 @@ public class Sistema {
 		if (precoClasseEconomica < 0) {
 			throw new IllegalArgumentException("Preço da classe econômica inválido!");
 		}
+		if(LocalDate.now().until(data).getYears()>20) {
+			throw new IllegalArgumentException("Data inválida!");
+		}
+			
 		return new Voo(data, hora, origem, destino, precoPrimeiraClasse, precoClasseEconomica);
 	}
 	
