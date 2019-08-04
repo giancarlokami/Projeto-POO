@@ -2,7 +2,6 @@ package aviao;
 
 import java.io.Serializable;
 
-import exceptions.AssentoOcupadoException;
 import usuario.Usuario;
 
 public class Poltrona implements Serializable {
@@ -44,27 +43,14 @@ public class Poltrona implements Serializable {
 		return ocupada;
 	}
 	
-	public void reserva(Usuario user,int idade, boolean ehPrimeiraClasse) throws AssentoOcupadoException {
-		if(!this.ocupada){
-			this.ocupada = true;
-			this.dono = user;
-			if(idade>=18) {
-				this.ehAdulto = true;
-			}else this.ehAdulto = false;
-			if(ehPrimeiraClasse) {
-				this.primeiraClasse = true;
-			}else this.primeiraClasse = false;
-			user.reservaVoo(this);
-		}else throw new AssentoOcupadoException();
+	public void reserva(Usuario user) {
+		this.dono = user;
+		this.ocupada = true;
 	}
 	
 	public void cancela() {
-		if(this.ocupada==true) {
-			this.getUsuario().cancelaReserva(this);
-			this.ocupada = false;
-			this.dono = null;
-			
-		}
+		this.dono = null;
+		this.ocupada = false;
 	}
 	
 }

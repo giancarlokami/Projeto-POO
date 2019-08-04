@@ -3,13 +3,18 @@ package principal;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
 import javax.swing.*;
 
 import aviao.Aviao;
+import aviao.Poltrona;
 import aviao.Voo;
-import exceptions.AssentoOcupadoException;
 import usuario.Atendente;
 import usuario.Passageiro;
 import usuario.Usuario;
@@ -23,7 +28,8 @@ public class Sistema {
 	private static GerenciadorArquivos<Usuario> gerenciadorUsuarios;
 	private static GerenciadorArquivos<Voo> gerenciadorVoos;
 	private static GerenciadorLog log;
-	private static Usuario usuarioAtual;
+	private static Usuario usuarioAtual = null;
+	private static Voo vooAtual = null;
 	
 	public static void main(String[] args) {
 		try {
@@ -208,469 +214,6 @@ public class Sistema {
 	
 	
 	
-	private static void mensagemBoasVindas() {
-        String html = "<html><body>"
-        			+ "<h3>Seja bem vindo(a) a UFABC Airlines!</h3>"
-					+ "<pre>            ______                                        <br>"
-					+ "            _\\ _~-\\___                                       <br>"
-					+ "    =  = ==(___UFABC__D                                        <br>"
-					+ "                \\_____\\___________________,-~~~~~~~`-.._     <br>"
-					+ "                /     o O o o o o O O o o o o o o O o  |\\_    <br>"
-					+ "                `~-.__        ___..----..                  )   <br>"
-					+ "                      `---~~\\___________/------------`````    <br>"
-					+ "                      =  ===(_________D                        <br>"
-					+ "<br><br><p width='400px' align='center'> Clique em OK para continuar"
-					+ "</body></html>\n"
-					+ "\n";
-		
-		JOptionPane.showMessageDialog(null, html, "Bem-vindo(a)", JOptionPane.PLAIN_MESSAGE);
-	}
-	
-	private static void menuPrincipal() {
-		mensagemBoasVindas();
-		int escolha = 0;
-		String msg;
-		while(escolha != 5) {
-			msg = "Escolha uma opcao:\n"
-				+ "|- 1. Cadastrar um novo usuario\n"
-				+ "|- 2. Remover um usuario\n"
-				+ "|- 3. Exibir usuarios cadastrados\n"
-				+ "|- 4. Fazer login (eh necessario para buscar os voos)\n"
-				+ "|- 5. Sair\n";
-			
-			escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, "Menu Principal", JOptionPane.PLAIN_MESSAGE));
-			
-			switch(escolha) {
-			case 1:
-				menuCadastroUsuario();
-				break;
-			case 2:
-				menuRemoveUsuario();
-				break;
-			case 3:
-				if(users.size() == 0) {
-					msg = "Nao ha usuarios cadastrados";
-					JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
-				} else {
-					msg = "";
-					for (Usuario u : users) { 
-						msg += u + "\n";
-					}
-					JOptionPane.showMessageDialog(null, msg, "Usuarios", JOptionPane.PLAIN_MESSAGE);
-				}
-				break;
-			case 4:
-				menuLogin();
-				break;
-			case 5:
-				break;
-			default:
-				msg = "Escolha invalida.";
-				JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
-				break;
-			}
-		}
-		
-		desliga();
-	}
-
-	private static void menuCadastroUsuario() {
-		String msg;
-		char tipoUser;
-		String nomeUser;
-		String idadeUser;
-		Usuario novo;
-		
-		msg = "Digite o tipo de usuario(A para Atendente, P para passageiro), ou digite 'S' para voltar:";
-		tipoUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE).toUpperCase().charAt(0);
-		
-		while(tipoUser != 'A' && tipoUser != 'P' && tipoUser != 'S') {
-			msg = "Opcao invalida, digite A para Atendente, P para passageiro ou 'S' para voltar";
-			tipoUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE).toUpperCase().charAt(0);
-		}
-		
-		if(tipoUser == 'S') {
-			return;
-		}
-		
-		msg = "Digite nome do usuario, use '-' ou '_' no lugar de espacos, ou 'S' para voltar:";
-		nomeUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
-		
-		if(nomeUser.toUpperCase().equals("S")) {
-			return;
-		}
-		
-		while(buscaUsuario(nomeUser) != null) {
-			msg = "Nome ja esta sendo utilizado, digite um nome diferente ou 'S' para voltar";
-			nomeUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
-			
-			if(nomeUser.toUpperCase().equals("S")) {
-				return;
-			}
-		}
-		
-		if(tipoUser == 'A') {
-			novo = new Atendente(nomeUser);
-		} else {
-			msg = "Digite a idade do usuario, ou 'S' para voltar:";
-			idadeUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE);
-			
-			if(idadeUser.toUpperCase().equals("S"))
-				return;
-				
-			while(Integer.parseInt(idadeUser) < 0) {
-				msg = "Idade inválida!";
-				idadeUser = JOptionPane.showInputDialog(null, msg, "Cadastrar Usuario", JOptionPane.PLAIN_MESSAGE);
-				if(idadeUser.toUpperCase().equals("S"))
-					return;
-			}
-			novo = new Passageiro(nomeUser, Integer.parseInt(idadeUser));
-		}
-		
-		users.add(novo);
-		msg = "Usuario adicionado com sucesso";
-		JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.PLAIN_MESSAGE);
-		log.registrarAcao("Novo usuario adicionado: " + nomeUser);
-	}
-	
-	private static void menuRemoveUsuario() {
-		String msg;
-		msg = "Digite o nome do usuario que sera removido, use '-' ou '_' no lugar de espacos, ou 'S' para voltar:";
-		String nome = JOptionPane.showInputDialog(null, msg, "Remover Usuario", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
-		
-		if(nome.toUpperCase().equals("S")) {
-			return;
-		}
-		
-		Usuario user = buscaUsuario(nome);
-		
-		while(user == null) {
-			msg = "Nao existe nenhum usuario com esse nome, digite um nome diferente ou 'S' para voltar";
-			nome = JOptionPane.showInputDialog(null, msg, "Remover Usuario", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
-			
-			if(nome.toUpperCase().equals("S")) {
-				return;
-			}
-		}
-		
-		users.remove(user);
-		msg = "Usuario removido com sucesso";
-		JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.PLAIN_MESSAGE);
-		log.registrarAcao("Usurario removido: " + nome);
-		
-	}
-	
-	private static void menuLogin() {
-		String msg;
-		String nome = "";
-		
-		while(nome != null && !nome.toUpperCase().equals("S")) {
-			msg = "Digite o seu nome, use '-' ou '_' no lugar de espacos, ou digite 'S' para voltar:";
-			nome = JOptionPane.showInputDialog(null, msg, "Logar", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
-			Usuario user = buscaUsuario(nome);
-			
-			if(!nome.toUpperCase().equals("S") && user != null) {
-				if(user instanceof Atendente) {
-					menuAtendente((Atendente) user);
-					return;
-				} else {
-					menuPassageiro(user);
-					return;
-				}
-			} else if (!nome.toUpperCase().equals("S")) {
-				msg = "Usuario nao cadastrado.";
-				JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
-			}
-		}
-	}
-	
-	private static void menuPassageiro(Usuario usuario) {
-		String msg;
-		msg = "Seja bem vindo(a) " + usuario.getNome();
-		int escolha = 0;
-		
-		while(escolha != 6) {
-			msg = "Escolha uma opcao:\n"
-				+ "|- 1. Consultar reservas\n"
-				+ "|- 2. Cancelar reserva\n"
-				+ "|- 3. Pagar reserva\n"
-				+ "|- 4. Procurar voo\n"
-				+ "|- 5. Alterar nome\n"
-				+ "|- 6. Voltar";
-			
-			
-			escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, "Menu de Passageiro", JOptionPane.PLAIN_MESSAGE));
-			
-			switch(escolha) {
-			case 1:
-				/*if(usuario.getReservas() == null || usuario.getReservas().size() == 0) {
-					System.out.println("O usuario nao possui reservas");
-				} else {
-					usuario.getReservas().forEach(reserva -> System.out.println(reserva));
-				}
-				*/
-				break;
-			case 2:
-				//menuCancelaReserva(usuario);
-				break;
-			case 3:
-				//menuPagaReserva(usuario);
-				break;
-			case 4:
-				menuBuscaVoo(usuario);
-				break;
-			case 5:
-				menuMudaNome(usuario);
-				break;
-			case 6:
-				break;
-			default:
-				msg = "Escolha invalida.";
-				JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
-				break;
-			}
-		}
-	}
-	
-	private static void menuAtendente(Atendente atendente) {
-		String msg;
-		msg = "Seja bem vindo(a) " + atendente.getNome();
-		int escolha = 0;
-		
-		while(escolha != 9) {
-			 msg = 	  "Escolha uma opcao:\n"
-					+ "|- 1. Consultar reservas\n"
-					+ "|- 2. Cancelar reserva\n"
-					+ "|- 3. Pagar reserva\n"
-					+ "|- 4. Procurar voo\n"
-					+ "|- 5. Alterar nome\n"
-					+ "|- 6. Criar voo\n"
-					+ "|- 7. Cancelar voo\n"
-					+ "|- 8. Gerar relatorio de um voo\n"
-					+ "|- 9. Voltar\n";
-			
-			escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, "Menu de Atendente", JOptionPane.PLAIN_MESSAGE));
-			
-			switch(escolha) {
-			case 1:
-				/*if(atendente.getReservas() == null || atendente.getReservas().size() == 0) {
-					System.out.println("O usuario nao possui reservas");
-				} else {
-					atendente.getReservas().forEach(reserva -> System.out.println(reserva));
-				}
-				*/
-				break;
-			case 2:
-				//menuCancelaReserva(atendente);
-				break;
-			case 3:
-				//menuPagaReserva(atendente);
-				break;
-			case 4:
-				menuBuscaVoo(atendente);
-				break;
-			case 5:
-				menuMudaNome(atendente);
-				break;
-			case 6:
-				try {
-					atendente.criaVoo(avioes);
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e, "Erro", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				break;
-			case 7:
-				atendente.cancelaVoo(getVoosAtuais());
-				break;
-			case 8:
-				atendente.geraRelatorio(getVoosAtuais());
-				break;
-			case 9:
-				break;
-			default:
-				msg = "Escolha invalida.";
-				JOptionPane.showMessageDialog(null, msg, "Erro", JOptionPane.ERROR_MESSAGE);
-				break;
-			}
-		}
-	}
-	/*
-	private static void menuCancelaReserva(Usuario usuario) {
-		ArrayList<Reserva> reservas = usuario.getReservas();
-		
-		if(reservas != null && reservas.size() > 0) {
-			int escolha;
-			
-			System.out.println("Escolha uma reserva para cancelar ou digite -1 para sair:");
-			
-			for(int i = 0; i < reservas.size(); i++) {
-				System.out.println((i + 1) + "" + reservas.get(i));
-			}
-			
-			escolha = sc.nextInt();
-			
-			while(escolha < -1 || escolha >= reservas.size()) {
-				System.out.println("Escolha algo entre 1 e " + reservas.size());
-				escolha = sc.nextInt();
-			}
-			
-			if(escolha == -1) {
-				return;
-			}
-			
-			usuario.cancelaReserva(reservas.get(escolha - 1));
-		} else {
-			System.out.println("O usuario nao possui reservas");
-		}
-	}
-	
-	private static void menuPagaReserva(Usuario usuario) {
-		ArrayList<Reserva> reservas = usuario.getReservas();
-		
-		if(reservas != null && reservas.size() > 0) {
-			int escolha;
-			
-			System.out.println("Escolha uma reserva para pagar ou digite -1 para sair:");
-			
-			for(int i = 0; i < reservas.size(); i++) {
-				System.out.println((i + 1) + "" + reservas.get(i));
-			}
-			
-			escolha = sc.nextInt();
-			
-			while(escolha < -1 || escolha >= reservas.size()) {
-				System.out.println("Escolha algo entre 1 e " + reservas.size());
-				escolha = sc.nextInt();
-			}
-			
-			if(escolha == -1) {
-				return;
-			}
-			
-			usuario.pagaReserva(reservas.get(escolha));
-		} else {
-			System.out.println("O usuario nao possui reservas");
-		}
-	}*/
-	
-	private static void menuBuscaVoo(Usuario usuario) {
-		String msg;
-		msg = "Digite um destino, use '_' ou '-' no lugar de espacos, ou 'S' para voltar: ";
-		String destino = JOptionPane.showInputDialog(null, msg, "Busca de voos", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
-		final String destinoConst = destino;
-		
-		if(destino.toUpperCase().equals("S")) {
-			return;
-		}
-		
-		ArrayList<Voo> voosAtuais = getVoosAtuais();
-		ArrayList<Voo> matches = (ArrayList<Voo>) voosAtuais.stream()
-				.filter(voo -> voo.getDestino().equals(destinoConst) && voo.getAviao() != null)
-				.collect(Collectors.toList());
-		
-		while(matches.size() == 0) {
-			msg = "Nao ha voos para esse destino. Digite um novo destino para continuar buscando ou 'S' para sair";
-			destino = JOptionPane.showInputDialog(null, msg).replaceAll("[_-]", " ");
-			final String destinoFinal = destino;
-			
-			if(destino.toUpperCase().equals("S")) {
-				return;
-			}
-			
-			matches = (ArrayList<Voo>) voosAtuais.stream()
-					.filter(voo -> voo.getDestino().equals(destinoFinal))
-					.collect(Collectors.toList());
-		}
-		
-		msg = "Os voos disponiveis para esse destino sao:\n"
-			+ "Escolha um, ou digite -1 para sair:\n";
-		
-		for(int i = 0; i < matches.size(); i++) {
-			msg += "\n" + i + " - " + matches.get(i);
-		}
-		
-		int escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE));
-		
-		while(escolha < -1 || escolha >= matches.size()) {
-			msg = "Escolha algo entre 1 e " + matches.size();
-			escolha = Integer.parseInt(JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE));
-		}
-		
-		if(escolha == -1) {
-			return;
-		}
-		
-		menuReserva(matches.get(escolha),usuario);
-	}
-	
-	private static void menuReserva(Voo voo, Usuario user) {
-		
-		String msg;
-		
-		msg = "Escolha um assento, ou digite 'S' para sair: ";
-		String nAssento = JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE);
-		
-		if(nAssento.toUpperCase().equals("S")) {
-			return;
-		}
-		
-		while (Integer.parseInt(nAssento)<0&&Integer.parseInt(nAssento)>110){
-			msg = "Assento nao existe"; 
-			nAssento = JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE);
-			if(nAssento.toUpperCase().equals("S")) {
-				return;
-			}
-		}
-		
-		if(Integer.parseInt(nAssento)-1>20) {
-			try {
-				voo.getPoltronas().get(Integer.parseInt(nAssento)-1).reserva(user, user.getIdade(), false);
-			} catch (NumberFormatException | AssentoOcupadoException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}else {
-			try {
-				voo.getPoltronas().get(Integer.parseInt(nAssento)-1).reserva(user, user.getIdade(), true);
-			} catch (NumberFormatException | AssentoOcupadoException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		msg = "Assento reservado com sucesso";
-		JOptionPane.showMessageDialog(null,msg);
-		msg = "Deseja reservar outro assento, caso n�o digite 'S' para sair: ";
-		String outra = JOptionPane.showInputDialog(null, msg, JOptionPane.PLAIN_MESSAGE);
-		
-		if(outra.toUpperCase().equals("S")) {
-			return;
-		}else menuReserva(voo,user);
-		
-	}
-	
-	private static void menuMudaNome(Usuario usuario) {
-		String msg;
-		msg = "Digite um novo nome, use '-' ou '_' no lugar de espacos, ou 'S' para voltar:";
-		String novoNome = JOptionPane.showInputDialog(null, msg, "Mudar Nome", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
-		
-		if(novoNome.toUpperCase().equals("S")) {
-			return;
-		}
-		
-		while(buscaUsuario(novoNome) != null) {
-			msg = "Nome ja esta sendo utilizado, digite um nome diferente ou 'S' para voltar: ";
-			novoNome = JOptionPane.showInputDialog(null, msg, "Mudar Nome", JOptionPane.PLAIN_MESSAGE).replaceAll("[_-]", " ");
-			
-			if(novoNome.toUpperCase().equals("S")) {
-				return;
-			}
-		}
-		msg = "Nome alterado com sucesso!";
-		JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.PLAIN_MESSAGE);
-		usuario.setNome(novoNome);
-	}
-	
 	public static Atendente validaCadastroAtendente(String nome) {
 		if (nome.isBlank() || nome.isEmpty()) {
 			throw new IllegalArgumentException("Nome inválido!");
@@ -751,6 +294,39 @@ public class Sistema {
 		return voos;
 	}
 	
+	public static ArrayList<Voo> getVoosFiltrados(String[] filtro){
+		String dataS = filtro[0];
+		String horaS = filtro[1];
+		String origem = filtro[2];
+		String destino = filtro[3];
+		LocalDate data;
+		LocalTime hora;
+		ArrayList<Voo> voosFiltrados = getVoosAtuais();
+		if (!dataS.replace("/", "").isBlank() && !dataS.replace("/", "").isEmpty()){
+			try {
+				data = LocalDate.parse(dataS, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				voosFiltrados = (ArrayList<Voo>) voosFiltrados.stream().filter(v -> v.getData().equals(data)).collect(Collectors.toList());
+			} catch (Exception e) {
+				throw new IllegalArgumentException("Data inválida");
+			}
+		}
+		if (!horaS.replace(":", "").isBlank() && !horaS.replace(":", "").isEmpty()){
+			try {
+				hora = LocalTime.parse(horaS, DateTimeFormatter.ofPattern("HH:mm"));
+				voosFiltrados = (ArrayList<Voo>) voosFiltrados.stream().filter(v -> v.getHora().equals(hora)).collect(Collectors.toList());
+			} catch (Exception e) {
+				throw new IllegalArgumentException("Hora inválida");
+			}
+		}
+		if (!origem.isBlank() && !origem.isEmpty()) {
+			voosFiltrados = (ArrayList<Voo>) voosFiltrados.stream().filter(v -> v.getOrigem().equals(origem)).collect(Collectors.toList());
+		}
+		if (!destino.isBlank() && !destino.isEmpty()) {
+			voosFiltrados = (ArrayList<Voo>) voosFiltrados.stream().filter(v -> v.getDestino().equals(destino)).collect(Collectors.toList());
+		}
+		return voosFiltrados;
+	}
+	
 	public static int getQtdVoos() {
 		return getVoosAtuais().size();
 	}
@@ -795,6 +371,19 @@ public class Sistema {
 		log.registrarAcao("Novo voo criado: " + voo);
 	}
 	
+	public static void validaAlteracaoDeNome(String nome) {
+		if (nome.isBlank() || nome.isEmpty()) {
+			throw new IllegalArgumentException("Nome inválido!");
+		}
+		if (users.stream().filter(u -> u.getNome().contentEquals(nome)).collect(Collectors.toList()).size() != 0) {
+			throw new IllegalArgumentException("Já existe um usuário com este nome!");
+		}
+	}
+	
+	public static void alteraNome(String nome) {
+		usuarioAtual.setNome(nome);
+	}
+	
 	public static void mostraAviso(String message, int type) {
 		switch (type) {
 			case JOptionPane.ERROR_MESSAGE:
@@ -808,12 +397,207 @@ public class Sistema {
 				break;
 		}
 	}
-
+	
 	public static Usuario getUsuarioAtual() {
 		return usuarioAtual;
+	}
+	
+	public static Voo getVooFromString(String string) {
+		for (Voo v: getVoosAtuais()) {
+			if (v.toString().contentEquals(string)) {
+				return v;
+			}
+		}
+		throw new NoSuchElementException("Voo não encontrado!");
 	}
 
 	public static void setUsuarioAtual(Usuario usuarioAtual) {
 		Sistema.usuarioAtual = usuarioAtual;
+	}
+	
+	public static void setVooAtual(Voo voo) {
+		vooAtual = voo;
+	}
+	
+	public static Voo getVooAtual() {
+		return vooAtual;
+	}
+	
+	public static String getInfoVoo(Voo voo) {
+		String info = String.format(
+				  "Data: %s | Hora: %s\n"
+				+ "Origem: %s | Destino: %s\n"
+				+ "Aviao: %s\n"
+				+ "Preco Primeira Classe: R$ %.2f\n"
+				+ "Preco Classe Economica: R$ %.2f\n"
+				, voo.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+				, voo.getHora()
+				, voo.getOrigem()
+				, voo.getDestino()
+				, voo.getAviao()
+				, voo.getPrecoPrimeiraClasse()
+				, voo.getPrecoClasseEconomica());
+		return info;
+	}
+	
+	public static String getInfoReserva() {
+		String info = String.format(
+				  "Poltronas Selecionadas: %s\n"
+				+ "Poltronas da Primeira Classe: %d\n"
+				+ "Poltronas da Classe Economica: %d\n"
+				+ "Total: R$ %.2f"
+				, getInfoPoltronasUsuario()
+				, getQtdPoltronasPrimeiraClasseSelecionadas()
+				, getQtdPoltronasClasseEconomicaSelecionadas()
+				, calculaTotalReserva());
+		return info;
+				
+	}
+	
+	private static String getInfoPoltronasUsuario() {
+		String polt = "";
+		Collections.sort(getPoltronasUsuario(), new Comparator<Poltrona>() {
+			public int compare(Poltrona p1, Poltrona p2) {
+				return p1.getNumero() - p2.getNumero();
+			}
+		});
+		
+		for (Poltrona p : getPoltronasUsuario()) {
+			polt += " " + p.getNumero() + ";";
+		}
+		return polt;
+	}
+	
+	private static double calculaTotalReserva() {
+		return (getVooAtual().getPrecoPrimeiraClasse() * getQtdPoltronasPrimeiraClasseSelecionadas()) +
+				(getVooAtual().getPrecoClasseEconomica() * getQtdPoltronasClasseEconomicaSelecionadas());
+	}
+	
+	public static ArrayList<Voo> getReservasUsuarioAtual() {
+		ArrayList<Voo> reservas = new ArrayList<Voo>();
+		for (Voo v : getVoosAtuais()) {
+			for (Poltrona p : v.getPoltronas()) {
+				if (p.getUsuario() != null && p.getUsuario().equals(getUsuarioAtual())) {
+					reservas.add(v);
+				}
+			}
+		}
+		return (ArrayList<Voo>) reservas.stream().distinct().collect(Collectors.toList());
+	}
+	
+	private static int getQtdPoltronasPrimeiraClasseSelecionadas() {
+		return getPoltronasUsuario().stream().filter(p -> p.ehPrimeiraClasse()).collect(Collectors.toList()).size();
+	}
+	
+	private static int getQtdPoltronasClasseEconomicaSelecionadas() {
+		return getPoltronasUsuario().stream().filter(p -> !p.ehPrimeiraClasse()).collect(Collectors.toList()).size();
+	}
+	
+	public static void validaCancelamentoDeReserva(String reserva) {
+		if (reserva.isEmpty() || reserva.isBlank()) {
+			throw new IllegalArgumentException("Selecione uma reserva para cancelar!");
+		}
+		try {
+			getVooFromString(reserva);
+		} catch (Exception e) {
+			throw new NoSuchElementException("Este voo não está cadastrado!");
+		}
+	}
+	
+	public static void cancelaReserva(String reserva) {
+		Voo v = getVooFromString(reserva);
+		for (Poltrona p : v.getPoltronas()) {
+			if (p.getUsuario() != null && p.getUsuario().equals(usuarioAtual)) {
+				p.cancela();
+			}
+		}
+	}
+	
+	public static Voo validaReservaAtual(String voo) {
+		if (voo.isEmpty() || voo.isBlank()) {
+			throw new IllegalArgumentException("Selecione um voo!");
+		}
+		try {
+			return getVooFromString(voo);
+		} catch (Exception e) {
+			throw new NoSuchElementException("Voo não cadastrado!");
+		}
+	}
+
+	public static Voo validaRelatorioDeVoo(String voo) {
+		Voo v = null;
+		try {
+			v = getVooFromString(voo);
+		} catch (Exception e) {
+			throw new NoSuchElementException("Este voo não está cadastrado!");
+		}
+		if (voo.isBlank() && voo.isEmpty()) {
+			throw new IllegalArgumentException("Selecione um voo!");
+		}
+		return v;
+	}
+	
+	public static String geraRelatorioDeVoo(Voo v) {
+		String relatorio = String.format(
+				  "Data: %s | Hora: %s\n"
+				+ "Origem: %s\n"
+				+ "Destino: %s\n"
+				+ "Aviao: %s\n"
+				+ "\n"
+				+ "Dados dos passageiros:\n"
+				, v.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+				, v.getHora()
+				, v.getOrigem()
+				, v.getDestino()
+				, v.getAviao());
+		for (Poltrona p : v.getPoltronas()) {
+			if (p.estaOcupada()) {
+				relatorio += String.format("Poltrona %d (%s): %s\n", p.getNumero(), p.getTipo(), p.getUsuario());
+			}
+		}
+		relatorio += String.format(
+				  "\nQuantidade de poltronas da primeira classe: %d\n"
+				+ "Quantidade de poltronas da classe economica: %d\n"
+				+ "Quantidade de poltronas livres: %d\n"
+				+ "Quantidade de passageiros menores: %d\n"
+				+ "Total de vendas em passagens: R$ %.2f"
+				, v.getQtdPoltronasPrimeiraClasseOcupadas()
+				, v.getQtdPoltronasClasseEconomicaOcupadas()
+				, v.getQtdPoltronasLivres()
+				, v.getQtdPassageirosMenores()
+				, v.getTotalDeVendas());
+		
+		return relatorio;
+	}
+	
+	public static Voo validaCancelamentoDeVoo(String voo) {
+		if (voo.isBlank() || voo.isEmpty()) {
+			throw new IllegalArgumentException("É necessário selecionar um voo!");
+		}
+		try {
+			getVooFromString(voo);
+			if (getVooFromString(voo).getQtdPassageirosABordo() < 10) {
+				return getVooFromString(voo);
+			} else {
+				throw new IllegalArgumentException("Não é possível cancelar um voo com mais de 10 reservas!");
+			}
+		} catch (Exception e) {
+			throw new NoSuchElementException("Voo não cadastrado!");
+		}
+	}
+	
+	public static void cancelaVoo(Voo voo) {
+		avioes.get(avioes.indexOf(voo.getAviao())).removeVoo(voo);
+		log.registrarAcao("Voo cancelado: " + voo);
+	}
+	
+	public static ArrayList<Poltrona> getPoltronasUsuario() {
+		return (ArrayList<Poltrona>) vooAtual.getPoltronas().stream().filter(p -> p.getUsuario() != null && p.getUsuario().equals(getUsuarioAtual())).collect(Collectors.toList());
+	}
+	
+	public static void setPoltronasUsuario(ArrayList<Poltrona> poltronas) {
+		for (Poltrona p: poltronas) {
+			getUsuarioAtual().reservaPoltrona(p);
+		}
 	}
 }

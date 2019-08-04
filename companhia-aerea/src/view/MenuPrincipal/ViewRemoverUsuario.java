@@ -33,6 +33,7 @@ public class ViewRemoverUsuario extends JFrame {
 	private JList<String> lstUsuarios;
 
 	public ViewRemoverUsuario() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -62,6 +63,7 @@ public class ViewRemoverUsuario extends JFrame {
 		panel.add(scrollPane);
 		
 		lstUsuarios = new JList<String>();
+		lstUsuarios.setToolTipText("Lista de Usuarios");
 		lstUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		if (Sistema.getQtdUsuarios() > 0) {
