@@ -34,9 +34,7 @@ public abstract class Usuario implements Serializable {
 	}
 	
 	@Override
-	public String toString() {
-		return getNome();
-	}
+	public abstract String toString();
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -47,22 +45,10 @@ public abstract class Usuario implements Serializable {
 		return false;
 	}
 	
-	public void consultaResrvas() {
-		
-	}
-	
-	public void pagaReserva() {
-		
-	}
-	
 	public void cancelaReserva(Poltrona poltrona) {
 		this.reservadas.remove(poltrona);
 	}
 	
-	
-	public void alteraNome() {
-		
-	}
 	
 	public void reservaPoltrona(Poltrona poltrona) {
 		this.reservadas.add(poltrona);
