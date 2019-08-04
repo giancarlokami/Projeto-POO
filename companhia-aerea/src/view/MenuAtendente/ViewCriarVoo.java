@@ -237,10 +237,8 @@ public class ViewCriarVoo extends JFrame {
 						Sistema.criaVoo(voo, aviao);
 						Sistema.mostraAviso("Voo criado com sucesso!", JOptionPane.PLAIN_MESSAGE);
 						model.remove(lstAvioes.getSelectedIndex());
-					} catch (NumberFormatException e) {
-						Sistema.mostraAviso("Digite um valor valido!", JOptionPane.ERROR_MESSAGE);
-					} catch (ParseException e) {
-						Sistema.mostraAviso("As entradas nao podem ser nulas!", JOptionPane.ERROR_MESSAGE);
+					} catch (Exception e) {
+						Sistema.mostraAviso(e.getMessage(), JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
 					Sistema.mostraAviso("È preciso verificar a disponibilidade dos aviões antes de criar o voo", JOptionPane.ERROR_MESSAGE);
