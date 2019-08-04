@@ -37,6 +37,7 @@ public class ViewMenuAtendente extends JFrame {
 	private JLabel lblBemVindo;
 
 	public ViewMenuAtendente() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

@@ -53,10 +53,6 @@ public class Aviao implements Serializable {
 	}
 	
 	public void removeVoo(Voo voo) {
-		for(Voo vooat : voos) {
-			if(vooat.equals(voo)) {
-				vooat = null;
-			}
-		}
+		voos.remove(voo);
 	}
 }

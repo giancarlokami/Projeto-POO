@@ -3,12 +3,17 @@ package principal;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
 import aviao.Aviao;
+import aviao.Poltrona;
 import aviao.Voo;
 import usuario.Atendente;
 import usuario.Passageiro;
@@ -23,7 +28,8 @@ public class Sistema {
 	private static GerenciadorArquivos<Usuario> gerenciadorUsuarios;
 	private static GerenciadorArquivos<Voo> gerenciadorVoos;
 	private static GerenciadorLog log;
-	private static Usuario usuarioAtual;
+	private static Usuario usuarioAtual = null;
+	private static Voo vooAtual = null;
 	
 	public static void main(String[] args) {
 		try {
@@ -286,6 +292,39 @@ public class Sistema {
 		return voos;
 	}
 	
+	public static ArrayList<Voo> getVoosFiltrados(String[] filtro){
+		String dataS = filtro[0];
+		String horaS = filtro[1];
+		String origem = filtro[2];
+		String destino = filtro[3];
+		LocalDate data;
+		LocalTime hora;
+		ArrayList<Voo> voosFiltrados = getVoosAtuais();
+		if (!dataS.replace("/", "").isBlank() && !dataS.replace("/", "").isEmpty()){
+			try {
+				data = LocalDate.parse(dataS, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				voosFiltrados = (ArrayList<Voo>) voosFiltrados.stream().filter(v -> v.getData().equals(data)).collect(Collectors.toList());
+			} catch (Exception e) {
+				throw new IllegalArgumentException("Data inválida");
+			}
+		}
+		if (!horaS.replace(":", "").isBlank() && !horaS.replace(":", "").isEmpty()){
+			try {
+				hora = LocalTime.parse(horaS, DateTimeFormatter.ofPattern("HH:mm"));
+				voosFiltrados = (ArrayList<Voo>) voosFiltrados.stream().filter(v -> v.getHora().equals(hora)).collect(Collectors.toList());
+			} catch (Exception e) {
+				throw new IllegalArgumentException("Hora inválida");
+			}
+		}
+		if (!origem.isBlank() && !origem.isEmpty()) {
+			voosFiltrados = (ArrayList<Voo>) voosFiltrados.stream().filter(v -> v.getOrigem().equals(origem)).collect(Collectors.toList());
+		}
+		if (!destino.isBlank() && !destino.isEmpty()) {
+			voosFiltrados = (ArrayList<Voo>) voosFiltrados.stream().filter(v -> v.getDestino().equals(destino)).collect(Collectors.toList());
+		}
+		return voosFiltrados;
+	}
+	
 	public static int getQtdVoos() {
 		return getVoosAtuais().size();
 	}
@@ -330,6 +369,19 @@ public class Sistema {
 		log.registrarAcao("Novo voo criado: " + voo);
 	}
 	
+	public static void validaAlteracaoDeNome(String nome) {
+		if (nome.isBlank() || nome.isEmpty()) {
+			throw new IllegalArgumentException("Nome inválido!");
+		}
+		if (users.stream().filter(u -> u.getNome().contentEquals(nome)).collect(Collectors.toList()).size() != 0) {
+			throw new IllegalArgumentException("Já existe um usuário com este nome!");
+		}
+	}
+	
+	public static void alteraNome(String nome) {
+		usuarioAtual.setNome(nome);
+	}
+	
 	public static void mostraAviso(String message, int type) {
 		switch (type) {
 			case JOptionPane.ERROR_MESSAGE:
@@ -343,12 +395,207 @@ public class Sistema {
 				break;
 		}
 	}
-
+	
 	public static Usuario getUsuarioAtual() {
 		return usuarioAtual;
+	}
+	
+	public static Voo getVooFromString(String string) {
+		for (Voo v: getVoosAtuais()) {
+			if (v.toString().contentEquals(string)) {
+				return v;
+			}
+		}
+		throw new NoSuchElementException("Voo não encontrado!");
 	}
 
 	public static void setUsuarioAtual(Usuario usuarioAtual) {
 		Sistema.usuarioAtual = usuarioAtual;
+	}
+	
+	public static void setVooAtual(Voo voo) {
+		vooAtual = voo;
+	}
+	
+	public static Voo getVooAtual() {
+		return vooAtual;
+	}
+	
+	public static String getInfoVoo(Voo voo) {
+		String info = String.format(
+				  "Data: %s | Hora: %s\n"
+				+ "Origem: %s | Destino: %s\n"
+				+ "Aviao: %s\n"
+				+ "Preco Primeira Classe: R$ %.2f\n"
+				+ "Preco Classe Economica: R$ %.2f\n"
+				, voo.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+				, voo.getHora()
+				, voo.getOrigem()
+				, voo.getDestino()
+				, voo.getAviao()
+				, voo.getPrecoPrimeiraClasse()
+				, voo.getPrecoClasseEconomica());
+		return info;
+	}
+	
+	public static String getInfoReserva() {
+		String info = String.format(
+				  "Poltronas Selecionadas: %s\n"
+				+ "Poltronas da Primeira Classe: %d\n"
+				+ "Poltronas da Classe Economica: %d\n"
+				+ "Total: R$ %.2f"
+				, getInfoPoltronasUsuario()
+				, getQtdPoltronasPrimeiraClasseSelecionadas()
+				, getQtdPoltronasClasseEconomicaSelecionadas()
+				, calculaTotalReserva());
+		return info;
+				
+	}
+	
+	private static String getInfoPoltronasUsuario() {
+		String polt = "";
+		Collections.sort(getPoltronasUsuario(), new Comparator<Poltrona>() {
+			public int compare(Poltrona p1, Poltrona p2) {
+				return p1.getNumero() - p2.getNumero();
+			}
+		});
+		
+		for (Poltrona p : getPoltronasUsuario()) {
+			polt += " " + p.getNumero() + ";";
+		}
+		return polt;
+	}
+	
+	private static double calculaTotalReserva() {
+		return (getVooAtual().getPrecoPrimeiraClasse() * getQtdPoltronasPrimeiraClasseSelecionadas()) +
+				(getVooAtual().getPrecoClasseEconomica() * getQtdPoltronasClasseEconomicaSelecionadas());
+	}
+	
+	public static ArrayList<Voo> getReservasUsuarioAtual() {
+		ArrayList<Voo> reservas = new ArrayList<Voo>();
+		for (Voo v : getVoosAtuais()) {
+			for (Poltrona p : v.getPoltronas()) {
+				if (p.getUsuario() != null && p.getUsuario().equals(getUsuarioAtual())) {
+					reservas.add(v);
+				}
+			}
+		}
+		return (ArrayList<Voo>) reservas.stream().distinct().collect(Collectors.toList());
+	}
+	
+	private static int getQtdPoltronasPrimeiraClasseSelecionadas() {
+		return getPoltronasUsuario().stream().filter(p -> p.ehPrimeiraClasse()).collect(Collectors.toList()).size();
+	}
+	
+	private static int getQtdPoltronasClasseEconomicaSelecionadas() {
+		return getPoltronasUsuario().stream().filter(p -> !p.ehPrimeiraClasse()).collect(Collectors.toList()).size();
+	}
+	
+	public static void validaCancelamentoDeReserva(String reserva) {
+		if (reserva.isEmpty() || reserva.isBlank()) {
+			throw new IllegalArgumentException("Selecione uma reserva para cancelar!");
+		}
+		try {
+			getVooFromString(reserva);
+		} catch (Exception e) {
+			throw new NoSuchElementException("Este voo não está cadastrado!");
+		}
+	}
+	
+	public static void cancelaReserva(String reserva) {
+		Voo v = getVooFromString(reserva);
+		for (Poltrona p : v.getPoltronas()) {
+			if (p.getUsuario() != null && p.getUsuario().equals(usuarioAtual)) {
+				p.cancela();
+			}
+		}
+	}
+	
+	public static Voo validaReservaAtual(String voo) {
+		if (voo.isEmpty() || voo.isBlank()) {
+			throw new IllegalArgumentException("Selecione um voo!");
+		}
+		try {
+			return getVooFromString(voo);
+		} catch (Exception e) {
+			throw new NoSuchElementException("Voo não cadastrado!");
+		}
+	}
+
+	public static Voo validaRelatorioDeVoo(String voo) {
+		Voo v = null;
+		try {
+			v = getVooFromString(voo);
+		} catch (Exception e) {
+			throw new NoSuchElementException("Este voo não está cadastrado!");
+		}
+		if (voo.isBlank() && voo.isEmpty()) {
+			throw new IllegalArgumentException("Selecione um voo!");
+		}
+		return v;
+	}
+	
+	public static String geraRelatorioDeVoo(Voo v) {
+		String relatorio = String.format(
+				  "Data: %s | Hora: %s\n"
+				+ "Origem: %s\n"
+				+ "Destino: %s\n"
+				+ "Aviao: %s\n"
+				+ "\n"
+				+ "Dados dos passageiros:\n"
+				, v.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+				, v.getHora()
+				, v.getOrigem()
+				, v.getDestino()
+				, v.getAviao());
+		for (Poltrona p : v.getPoltronas()) {
+			if (p.estaOcupada()) {
+				relatorio += String.format("Poltrona %d (%s): %s\n", p.getNumero(), p.getTipo(), p.getUsuario());
+			}
+		}
+		relatorio += String.format(
+				  "\nQuantidade de poltronas da primeira classe: %d\n"
+				+ "Quantidade de poltronas da classe economica: %d\n"
+				+ "Quantidade de poltronas livres: %d\n"
+				+ "Quantidade de passageiros menores: %d\n"
+				+ "Total de vendas em passagens: R$ %.2f"
+				, v.getQtdPoltronasPrimeiraClasseOcupadas()
+				, v.getQtdPoltronasClasseEconomicaOcupadas()
+				, v.getQtdPoltronasLivres()
+				, v.getQtdPassageirosMenores()
+				, v.getTotalDeVendas());
+		
+		return relatorio;
+	}
+	
+	public static Voo validaCancelamentoDeVoo(String voo) {
+		if (voo.isBlank() || voo.isEmpty()) {
+			throw new IllegalArgumentException("É necessário selecionar um voo!");
+		}
+		try {
+			getVooFromString(voo);
+			if (getVooFromString(voo).getQtdPassageirosABordo() < 10) {
+				return getVooFromString(voo);
+			} else {
+				throw new IllegalArgumentException("Não é possível cancelar um voo com mais de 10 reservas!");
+			}
+		} catch (Exception e) {
+			throw new NoSuchElementException("Voo não cadastrado!");
+		}
+	}
+	
+	public static void cancelaVoo(Voo voo) {
+		avioes.get(avioes.indexOf(voo.getAviao())).removeVoo(voo);
+		log.registrarAcao("Voo cancelado: " + voo);
+	}
+	
+	public static ArrayList<Poltrona> getPoltronasUsuario() {
+		return (ArrayList<Poltrona>) vooAtual.getPoltronas().stream().filter(p -> p.getUsuario() != null && p.getUsuario().equals(getUsuarioAtual())).collect(Collectors.toList());
+	}
+	
+	public static void setPoltronasUsuario(ArrayList<Poltrona> poltronas) {
+		for (Poltrona p: poltronas) {
+			getUsuarioAtual().reservaPoltrona(p);
+		}
 	}
 }
