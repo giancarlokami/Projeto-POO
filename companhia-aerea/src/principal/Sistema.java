@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 import aviao.Aviao;
 import aviao.Poltrona;
@@ -211,8 +211,6 @@ public class Sistema {
 		}
 		return null;
 	}
-	
-	
 	
 	public static Atendente validaCadastroAtendente(String nome) {
 		if (nome.isBlank() || nome.isEmpty()) {
