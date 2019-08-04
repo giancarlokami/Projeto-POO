@@ -10,6 +10,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.GridLayout;
 import java.util.stream.Collectors;
 
@@ -34,6 +36,7 @@ public class ViewGerarRelatorioDeVoo extends JFrame {
 	private JButton btnSair;
 
 	public ViewGerarRelatorioDeVoo() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -64,6 +67,7 @@ public class ViewGerarRelatorioDeVoo extends JFrame {
 		panel.add(scrollPane);
 		
 		lstVoos = new JList<String>();
+		lstVoos.setToolTipText("Lista de Voos");
 		lstVoos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(lstVoos);
 		DefaultListModel<String> model = new DefaultListModel<String>();
@@ -78,6 +82,17 @@ public class ViewGerarRelatorioDeVoo extends JFrame {
 		panel_1.setLayout(new GridLayout(0, 2, 20, 0));
 		
 		btnGerarRelatorioDeVoo = new JButton("Gerar Relatorio de Voo");
+		btnGerarRelatorioDeVoo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Sistema.setVooAtual(Sistema.getVooFromString(lstVoos.getSelectedValue().toString()));
+					new ViewExibirRelatorioDeVoo().setVisible(true);;
+					dispose();
+				} catch (Exception e) {
+					Sistema.mostraAviso(e.getMessage(), JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		panel_1.add(btnGerarRelatorioDeVoo);
 		
 		btnSair = new JButton("Sair");

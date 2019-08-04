@@ -39,6 +39,7 @@ public class ViewCadastrarUsuario extends JFrame {
 	private JButton btnSair;
 
 	public ViewCadastrarUsuario() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -94,6 +95,7 @@ public class ViewCadastrarUsuario extends JFrame {
 		panel_1.add(lblNome);
 		
 		txtNome = new JTextField();
+		txtNome.setToolTipText("Nome");
 		txtNome.setBounds(73, 12, 327, 28);
 		panel_1.add(txtNome);
 		txtNome.setColumns(10);
@@ -104,6 +106,7 @@ public class ViewCadastrarUsuario extends JFrame {
 		panel_1.add(lblIdade);
 		
 		txtIdade = new JTextField();
+		txtIdade.setToolTipText("Idade");
 		txtIdade.setEnabled(false);
 		txtIdade.setColumns(10);
 		txtIdade.setBounds(73, 55, 60, 28);

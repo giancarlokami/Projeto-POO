@@ -57,6 +57,7 @@ public class ViewFazerLogin extends JFrame {
 		panel.add(lblNome);
 		
 		txtNome = new JTextField();
+		txtNome.setToolTipText("Nome");
 		txtNome.setBounds(75, 27, 311, 25);
 		panel.add(txtNome);
 		txtNome.setColumns(10);

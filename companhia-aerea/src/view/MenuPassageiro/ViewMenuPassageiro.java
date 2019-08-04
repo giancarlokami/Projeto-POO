@@ -34,6 +34,7 @@ public class ViewMenuPassageiro extends JFrame {
 	private JLabel label;
 
 	public ViewMenuPassageiro() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

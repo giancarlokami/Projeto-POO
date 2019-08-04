@@ -26,6 +26,7 @@ public class ViewPagarReserva extends JFrame {
 	private JButton btnSair;
 
 	public ViewPagarReserva() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

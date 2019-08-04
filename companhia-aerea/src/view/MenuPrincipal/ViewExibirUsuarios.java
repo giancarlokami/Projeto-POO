@@ -29,6 +29,7 @@ public class ViewExibirUsuarios extends JFrame {
 	private JList<String> lstUsuarios;
 
 	public ViewExibirUsuarios() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -49,6 +50,7 @@ public class ViewExibirUsuarios extends JFrame {
 		contentPane.add(scrollPane);
 		
 		lstUsuarios = new JList<String>();
+		lstUsuarios.setToolTipText("Lista de Usuarios");
 		lstUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(lstUsuarios);
 		DefaultListModel<String> model = new DefaultListModel<String>();

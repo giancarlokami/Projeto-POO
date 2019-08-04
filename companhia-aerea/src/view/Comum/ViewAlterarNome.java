@@ -10,6 +10,7 @@ import view.MenuAtendente.ViewMenuAtendente;
 import view.MenuPassageiro.ViewMenuPassageiro;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -29,6 +30,7 @@ public class ViewAlterarNome extends JFrame {
 	private JButton button_1;
 
 	public ViewAlterarNome() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -49,6 +51,7 @@ public class ViewAlterarNome extends JFrame {
 		contentPane.add(lblNovoNome);
 		
 		txtNovoNome = new JTextField();
+		txtNovoNome.setToolTipText("Novo Nome");
 		txtNovoNome.setBounds(120, 13, 308, 27);
 		contentPane.add(txtNovoNome);
 		txtNovoNome.setColumns(10);
@@ -59,6 +62,19 @@ public class ViewAlterarNome extends JFrame {
 		panel.setLayout(new GridLayout(0, 2, 20, 0));
 		
 		button = new JButton("Alterar Nome");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					String nome = txtNovoNome.getText();
+					Sistema.validaAlteracaoDeNome(nome);
+					Sistema.alteraNome(nome);
+					Sistema.mostraAviso("Nome alterado com sucesso!", JOptionPane.PLAIN_MESSAGE);
+				} catch (Exception e) {
+					Sistema.mostraAviso(e.getMessage(), JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
 		panel.add(button);
 		
 		button_1 = new JButton("Sair");
