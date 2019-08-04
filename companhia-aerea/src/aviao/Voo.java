@@ -72,7 +72,7 @@ public class Voo implements Serializable {
 		this.aviao = aviao;
 	}
 
-	public void inicializaPoltronas() {
+	private void inicializaPoltronas() {
 		String tipo;
 		for(int i=1;i<=20;i++) {
 			if(i%4==1||i%4==0) tipo = "Janela";
@@ -144,10 +144,5 @@ public class Voo implements Serializable {
 
 	public int getQtdPassageirosMenores() {
 		return poltronas.stream().filter(p -> p.getUsuario() != null && p.getUsuario() instanceof Passageiro && p.getUsuario().getIdade() < 18).collect(Collectors.toList()).size();
-	}
-
-	public double getTotalDeVendas() {
-		return precoClasseEconomica * getQtdPoltronasClasseEconomicaOcupadas() +
-				precoPrimeiraClasse * getQtdPoltronasPrimeiraClasseOcupadas();
 	}
 }

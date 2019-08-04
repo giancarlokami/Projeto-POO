@@ -58,7 +58,6 @@ public class Sistema {
 		carregaUsuarios();
 		carregaAvioes();
 		new ViewMenuPrincipal().setVisible(true);
-		//menuPrincipal();
 	}
 	
 	private static void salvaUsuarios() throws IOException {
@@ -563,7 +562,7 @@ public class Sistema {
 				, v.getQtdPoltronasClasseEconomicaOcupadas()
 				, v.getQtdPoltronasLivres()
 				, v.getQtdPassageirosMenores()
-				, v.getTotalDeVendas());
+				, v.getValorTotal());
 		
 		return relatorio;
 	}

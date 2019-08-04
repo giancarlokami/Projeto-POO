@@ -7,3 +7,26 @@
 [03/08/2019 13:55:32] Usuarios salvos com sucesso.
 [03/08/2019 13:55:32] Voos salvos com sucesso
 [03/08/2019 13:55:32] Sistema desligou sem erros.
+[03/08/2019 14:05:12] Sistema iniciado.
+[03/08/2019 14:05:12] Usuarios carregados com sucesso.
+[03/08/2019 14:05:12] Voos carregados com sucesso.
+[03/08/2019 14:19:50] Desligando sistema.
+[03/08/2019 14:19:50] Usuarios salvos com sucesso.
+[03/08/2019 14:19:50] Voos salvos com sucesso
+[03/08/2019 14:19:50] Sistema desligou sem erros.
+[04/08/2019 15:21:23] Sistema iniciado.
+[04/08/2019 15:21:23] Usuarios carregados com sucesso.
+[04/08/2019 15:21:24] Voos carregados com sucesso.
+[04/08/2019 15:21:58] Novo voo criado: Origem: a | Destino: b | Data: 04/08/2019:15:21 | Aviao: Aviao3
+[04/08/2019 15:22:17] Desligando sistema.
+[04/08/2019 15:22:17] Usuarios salvos com sucesso.
+[04/08/2019 15:22:17] Voos salvos com sucesso
+[04/08/2019 15:22:17] Sistema desligou sem erros.
+[04/08/2019 16:02:12] Sistema iniciado.
+[04/08/2019 16:02:12] Usuarios carregados com sucesso.
+[04/08/2019 16:02:12] Voos carregados com sucesso.
+[04/08/2019 16:02:28] Voo cancelado: Origem: a | Destino: b | Data: 04/08/2019:15:21 | Aviao: Aviao3
+[04/08/2019 16:02:44] Desligando sistema.
+[04/08/2019 16:02:44] Usuarios salvos com sucesso.
+[04/08/2019 16:02:44] Voos salvos com sucesso
+[04/08/2019 16:02:44] Sistema desligou sem erros.
