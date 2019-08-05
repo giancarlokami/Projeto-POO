@@ -20,3 +20,333 @@
 [01/08/2019 20:48:23] Usuarios salvos com sucesso.
 [01/08/2019 20:48:23] Voos salvos com sucesso
 [01/08/2019 20:48:23] Sistema desligou sem erros.
+[04/08/2019 17:33:30] Sistema iniciado.
+[04/08/2019 17:33:30] Usuarios carregados com sucesso.
+[04/08/2019 17:33:30] Voos carregados com sucesso.
+[04/08/2019 17:33:52] Novo passageiro adicionado: teste
+[04/08/2019 17:35:24] Desligando sistema.
+[04/08/2019 17:35:24] Usuarios salvos com sucesso.
+[04/08/2019 17:35:24] Voos salvos com sucesso
+[04/08/2019 17:35:24] Sistema desligou sem erros.
+[04/08/2019 18:11:48] Sistema iniciado.
+[04/08/2019 18:11:48] Usuarios carregados com sucesso.
+[04/08/2019 18:11:48] Voos carregados com sucesso.
+[04/08/2019 18:12:10] Desligando sistema.
+[04/08/2019 18:12:10] Usuarios salvos com sucesso.
+[04/08/2019 18:12:10] Voos salvos com sucesso
+[04/08/2019 18:12:10] Sistema desligou sem erros.
+[04/08/2019 18:12:31] Sistema iniciado.
+[04/08/2019 18:12:31] Usuarios carregados com sucesso.
+[04/08/2019 18:12:31] Voos carregados com sucesso.
+[04/08/2019 18:12:54] Desligando sistema.
+[04/08/2019 18:12:54] Usuarios salvos com sucesso.
+[04/08/2019 18:12:54] Voos salvos com sucesso
+[04/08/2019 18:12:54] Sistema desligou sem erros.
+[04/08/2019 18:13:28] Sistema iniciado.
+[04/08/2019 18:13:28] Usuarios carregados com sucesso.
+[04/08/2019 18:13:28] Voos carregados com sucesso.
+[04/08/2019 18:13:55] Desligando sistema.
+[04/08/2019 18:13:55] Usuarios salvos com sucesso.
+[04/08/2019 18:13:55] Voos salvos com sucesso
+[04/08/2019 18:13:55] Sistema desligou sem erros.
+[04/08/2019 18:14:19] Sistema iniciado.
+[04/08/2019 18:14:19] Usuarios carregados com sucesso.
+[04/08/2019 18:14:19] Voos carregados com sucesso.
+[04/08/2019 18:14:39] Desligando sistema.
+[04/08/2019 18:14:39] Usuarios salvos com sucesso.
+[04/08/2019 18:14:39] Voos salvos com sucesso
+[04/08/2019 18:14:39] Sistema desligou sem erros.
+[04/08/2019 18:27:56] Sistema iniciado.
+[04/08/2019 18:27:56] Usuarios carregados com sucesso.
+[04/08/2019 18:27:56] Voos carregados com sucesso.
+[04/08/2019 18:28:37] Desligando sistema.
+[04/08/2019 18:28:37] Usuarios salvos com sucesso.
+[04/08/2019 18:28:37] Voos salvos com sucesso
+[04/08/2019 18:28:37] Sistema desligou sem erros.
+[04/08/2019 18:30:23] Sistema iniciado.
+[04/08/2019 18:30:23] Usuarios carregados com sucesso.
+[04/08/2019 18:30:23] Voos carregados com sucesso.
+[04/08/2019 18:32:58] Desligando sistema.
+[04/08/2019 18:32:58] Usuarios salvos com sucesso.
+[04/08/2019 18:32:58] Voos salvos com sucesso
+[04/08/2019 18:32:58] Sistema desligou sem erros.
+[04/08/2019 18:37:08] Sistema iniciado.
+[04/08/2019 18:37:08] Usuarios carregados com sucesso.
+[04/08/2019 18:37:08] Voos carregados com sucesso.
+[04/08/2019 18:37:28] Desligando sistema.
+[04/08/2019 18:37:28] Usuarios salvos com sucesso.
+[04/08/2019 18:37:28] Voos salvos com sucesso
+[04/08/2019 18:37:28] Sistema desligou sem erros.
+[04/08/2019 18:38:37] Sistema iniciado.
+[04/08/2019 18:38:37] Usuarios carregados com sucesso.
+[04/08/2019 18:38:37] Voos carregados com sucesso.
+[04/08/2019 18:39:00] Desligando sistema.
+[04/08/2019 18:39:00] Usuarios salvos com sucesso.
+[04/08/2019 18:39:00] Voos salvos com sucesso
+[04/08/2019 18:39:00] Sistema desligou sem erros.
+[04/08/2019 18:39:42] Sistema iniciado.
+[04/08/2019 18:39:42] Usuarios carregados com sucesso.
+[04/08/2019 18:39:42] Voos carregados com sucesso.
+[04/08/2019 18:40:04] Desligando sistema.
+[04/08/2019 18:40:04] Usuarios salvos com sucesso.
+[04/08/2019 18:40:04] Voos salvos com sucesso
+[04/08/2019 18:40:04] Sistema desligou sem erros.
+[04/08/2019 18:48:59] Sistema iniciado.
+[04/08/2019 18:48:59] Usuarios carregados com sucesso.
+[04/08/2019 18:48:59] Voos carregados com sucesso.
+[04/08/2019 18:49:51] Desligando sistema.
+[04/08/2019 18:49:51] Usuarios salvos com sucesso.
+[04/08/2019 18:49:51] Voos salvos com sucesso
+[04/08/2019 18:49:51] Sistema desligou sem erros.
+[04/08/2019 18:50:09] Sistema iniciado.
+[04/08/2019 18:50:09] Usuarios carregados com sucesso.
+[04/08/2019 18:50:09] Voos carregados com sucesso.
+[04/08/2019 18:50:26] Desligando sistema.
+[04/08/2019 18:50:26] Usuarios salvos com sucesso.
+[04/08/2019 18:50:26] Voos salvos com sucesso
+[04/08/2019 18:50:26] Sistema desligou sem erros.
+[04/08/2019 18:50:37] Sistema iniciado.
+[04/08/2019 18:50:37] Usuarios carregados com sucesso.
+[04/08/2019 18:50:37] Voos carregados com sucesso.
+[04/08/2019 18:51:06] Desligando sistema.
+[04/08/2019 18:51:06] Usuarios salvos com sucesso.
+[04/08/2019 18:51:06] Voos salvos com sucesso
+[04/08/2019 18:51:06] Sistema desligou sem erros.
+[04/08/2019 18:51:31] Sistema iniciado.
+[04/08/2019 18:51:31] Usuarios carregados com sucesso.
+[04/08/2019 18:51:31] Voos carregados com sucesso.
+[04/08/2019 18:51:59] Desligando sistema.
+[04/08/2019 18:51:59] Usuarios salvos com sucesso.
+[04/08/2019 18:51:59] Voos salvos com sucesso
+[04/08/2019 18:51:59] Sistema desligou sem erros.
+[04/08/2019 18:52:16] Sistema iniciado.
+[04/08/2019 18:52:16] Usuarios carregados com sucesso.
+[04/08/2019 18:52:16] Voos carregados com sucesso.
+[04/08/2019 18:52:33] Desligando sistema.
+[04/08/2019 18:52:33] Usuarios salvos com sucesso.
+[04/08/2019 18:52:33] Voos salvos com sucesso
+[04/08/2019 18:52:33] Sistema desligou sem erros.
+[04/08/2019 18:52:47] Sistema iniciado.
+[04/08/2019 18:52:47] Usuarios carregados com sucesso.
+[04/08/2019 18:52:47] Voos carregados com sucesso.
+[04/08/2019 18:53:08] Desligando sistema.
+[04/08/2019 18:53:08] Usuarios salvos com sucesso.
+[04/08/2019 18:53:08] Voos salvos com sucesso
+[04/08/2019 18:53:08] Sistema desligou sem erros.
+[04/08/2019 18:58:09] Sistema iniciado.
+[04/08/2019 18:58:09] Usuarios carregados com sucesso.
+[04/08/2019 18:58:09] Voos carregados com sucesso.
+[04/08/2019 18:58:32] Desligando sistema.
+[04/08/2019 18:58:32] Usuarios salvos com sucesso.
+[04/08/2019 18:58:32] Voos salvos com sucesso
+[04/08/2019 18:58:32] Sistema desligou sem erros.
+[04/08/2019 18:59:20] Sistema iniciado.
+[04/08/2019 18:59:20] Usuarios carregados com sucesso.
+[04/08/2019 18:59:21] Voos carregados com sucesso.
+[04/08/2019 18:59:57] Desligando sistema.
+[04/08/2019 18:59:57] Usuarios salvos com sucesso.
+[04/08/2019 18:59:57] Voos salvos com sucesso
+[04/08/2019 18:59:57] Sistema desligou sem erros.
+[04/08/2019 19:01:20] Sistema iniciado.
+[04/08/2019 19:01:20] Usuarios carregados com sucesso.
+[04/08/2019 19:01:20] Voos carregados com sucesso.
+[04/08/2019 19:01:24] Desligando sistema.
+[04/08/2019 19:01:24] Usuarios salvos com sucesso.
+[04/08/2019 19:01:24] Voos salvos com sucesso
+[04/08/2019 19:01:24] Sistema desligou sem erros.
+[04/08/2019 19:03:58] Sistema iniciado.
+[04/08/2019 19:03:58] Usuarios carregados com sucesso.
+[04/08/2019 19:03:58] Voos carregados com sucesso.
+[04/08/2019 19:04:38] Desligando sistema.
+[04/08/2019 19:04:38] Usuarios salvos com sucesso.
+[04/08/2019 19:04:38] Voos salvos com sucesso
+[04/08/2019 19:04:38] Sistema desligou sem erros.
+[04/08/2019 19:13:49] Sistema iniciado.
+[04/08/2019 19:13:49] Usuarios carregados com sucesso.
+[04/08/2019 19:13:49] Voos carregados com sucesso.
+[04/08/2019 19:14:20] Desligando sistema.
+[04/08/2019 19:14:20] Usuarios salvos com sucesso.
+[04/08/2019 19:14:20] Voos salvos com sucesso
+[04/08/2019 19:14:20] Sistema desligou sem erros.
+[04/08/2019 19:24:05] Sistema iniciado.
+[04/08/2019 19:24:05] Usuarios carregados com sucesso.
+[04/08/2019 19:24:05] Voos carregados com sucesso.
+[04/08/2019 19:24:35] Desligando sistema.
+[04/08/2019 19:24:35] Usuarios salvos com sucesso.
+[04/08/2019 19:24:35] Voos salvos com sucesso
+[04/08/2019 19:24:35] Sistema desligou sem erros.
+[04/08/2019 19:48:09] Sistema iniciado.
+[04/08/2019 19:48:09] Usuarios carregados com sucesso.
+[04/08/2019 19:48:09] Voos carregados com sucesso.
+[04/08/2019 19:48:46] Desligando sistema.
+[04/08/2019 19:48:46] Usuarios salvos com sucesso.
+[04/08/2019 19:48:46] Voos salvos com sucesso
+[04/08/2019 19:48:46] Sistema desligou sem erros.
+[04/08/2019 19:53:05] Sistema iniciado.
+[04/08/2019 19:53:05] Usuarios carregados com sucesso.
+[04/08/2019 19:53:05] Voos carregados com sucesso.
+[04/08/2019 19:53:52] Desligando sistema.
+[04/08/2019 19:53:52] Usuarios salvos com sucesso.
+[04/08/2019 19:53:52] Voos salvos com sucesso
+[04/08/2019 19:53:52] Sistema desligou sem erros.
+[04/08/2019 19:57:24] Sistema iniciado.
+[04/08/2019 19:57:24] Usuarios carregados com sucesso.
+[04/08/2019 19:57:24] Voos carregados com sucesso.
+[04/08/2019 19:58:22] Desligando sistema.
+[04/08/2019 19:58:22] Usuarios salvos com sucesso.
+[04/08/2019 19:58:22] Voos salvos com sucesso
+[04/08/2019 19:58:22] Sistema desligou sem erros.
+[04/08/2019 19:59:30] Sistema iniciado.
+[04/08/2019 19:59:30] Usuarios carregados com sucesso.
+[04/08/2019 19:59:30] Voos carregados com sucesso.
+[04/08/2019 20:00:20] Desligando sistema.
+[04/08/2019 20:00:20] Usuarios salvos com sucesso.
+[04/08/2019 20:00:20] Voos salvos com sucesso
+[04/08/2019 20:00:20] Sistema desligou sem erros.
+[04/08/2019 20:21:59] Sistema iniciado.
+[04/08/2019 20:21:59] Usuarios carregados com sucesso.
+[04/08/2019 20:21:59] Voos carregados com sucesso.
+[04/08/2019 20:22:24] Desligando sistema.
+[04/08/2019 20:22:24] Usuarios salvos com sucesso.
+[04/08/2019 20:22:24] Voos salvos com sucesso
+[04/08/2019 20:22:24] Sistema desligou sem erros.
+[04/08/2019 20:23:38] Sistema iniciado.
+[04/08/2019 20:23:38] Usuarios carregados com sucesso.
+[04/08/2019 20:23:38] Voos carregados com sucesso.
+[04/08/2019 20:23:57] Desligando sistema.
+[04/08/2019 20:23:57] Usuarios salvos com sucesso.
+[04/08/2019 20:23:57] Voos salvos com sucesso
+[04/08/2019 20:23:57] Sistema desligou sem erros.
+[04/08/2019 20:48:03] Sistema iniciado.
+[04/08/2019 20:48:03] Usuarios carregados com sucesso.
+[04/08/2019 20:48:03] Voos carregados com sucesso.
+[04/08/2019 20:48:07] Desligando sistema.
+[04/08/2019 20:48:07] Usuarios salvos com sucesso.
+[04/08/2019 20:48:07] Voos salvos com sucesso
+[04/08/2019 20:48:07] Sistema desligou sem erros.
+[04/08/2019 20:48:20] Sistema iniciado.
+[04/08/2019 20:48:20] Usuarios carregados com sucesso.
+[04/08/2019 20:48:20] Voos carregados com sucesso.
+[04/08/2019 20:48:59] Desligando sistema.
+[04/08/2019 20:48:59] Usuarios salvos com sucesso.
+[04/08/2019 20:48:59] Voos salvos com sucesso
+[04/08/2019 20:48:59] Sistema desligou sem erros.
+[04/08/2019 20:49:23] Sistema iniciado.
+[04/08/2019 20:49:23] Usuarios carregados com sucesso.
+[04/08/2019 20:49:23] Voos carregados com sucesso.
+[04/08/2019 20:50:43] Desligando sistema.
+[04/08/2019 20:50:43] Usuarios salvos com sucesso.
+[04/08/2019 20:50:43] Voos salvos com sucesso
+[04/08/2019 20:50:43] Sistema desligou sem erros.
+[04/08/2019 20:53:57] Sistema iniciado.
+[04/08/2019 20:53:57] Usuarios carregados com sucesso.
+[04/08/2019 20:53:57] Voos carregados com sucesso.
+[04/08/2019 21:03:59] Desligando sistema.
+[04/08/2019 21:03:59] Usuarios salvos com sucesso.
+[04/08/2019 21:03:59] Voos salvos com sucesso
+[04/08/2019 21:03:59] Sistema desligou sem erros.
+[04/08/2019 21:04:32] Sistema iniciado.
+[04/08/2019 21:04:32] Usuarios carregados com sucesso.
+[04/08/2019 21:04:32] Voos carregados com sucesso.
+[04/08/2019 21:05:14] Desligando sistema.
+[04/08/2019 21:05:14] Usuarios salvos com sucesso.
+[04/08/2019 21:05:14] Voos salvos com sucesso
+[04/08/2019 21:05:14] Sistema desligou sem erros.
+[04/08/2019 21:22:21] Sistema iniciado.
+[04/08/2019 21:22:21] Usuarios carregados com sucesso.
+[04/08/2019 21:22:21] Voos carregados com sucesso.
+[04/08/2019 21:22:25] Desligando sistema.
+[04/08/2019 21:22:25] Usuarios salvos com sucesso.
+[04/08/2019 21:22:25] Voos salvos com sucesso
+[04/08/2019 21:22:25] Sistema desligou sem erros.
+[04/08/2019 21:24:36] Sistema iniciado.
+[04/08/2019 21:24:36] Usuarios carregados com sucesso.
+[04/08/2019 21:24:37] Voos carregados com sucesso.
+[04/08/2019 21:26:23] Desligando sistema.
+[04/08/2019 21:26:23] Usuarios salvos com sucesso.
+[04/08/2019 21:26:23] Voos salvos com sucesso
+[04/08/2019 21:26:23] Sistema desligou sem erros.
+[04/08/2019 21:27:58] Sistema iniciado.
+[04/08/2019 21:27:58] Usuarios carregados com sucesso.
+[04/08/2019 21:27:58] Voos carregados com sucesso.
+[04/08/2019 21:28:26] Desligando sistema.
+[04/08/2019 21:28:26] Usuarios salvos com sucesso.
+[04/08/2019 21:28:26] Voos salvos com sucesso
+[04/08/2019 21:28:26] Sistema desligou sem erros.
+[04/08/2019 21:35:47] Sistema iniciado.
+[04/08/2019 21:35:47] Usuarios carregados com sucesso.
+[04/08/2019 21:35:47] Voos carregados com sucesso.
+[04/08/2019 21:36:18] Desligando sistema.
+[04/08/2019 21:36:18] Usuarios salvos com sucesso.
+[04/08/2019 21:36:18] Voos salvos com sucesso
+[04/08/2019 21:36:18] Sistema desligou sem erros.
+[04/08/2019 21:39:22] Sistema iniciado.
+[04/08/2019 21:39:22] Usuarios carregados com sucesso.
+[04/08/2019 21:39:22] Voos carregados com sucesso.
+[04/08/2019 21:40:00] Desligando sistema.
+[04/08/2019 21:40:00] Usuarios salvos com sucesso.
+[04/08/2019 21:40:00] Voos salvos com sucesso
+[04/08/2019 21:40:00] Sistema desligou sem erros.
+[04/08/2019 21:44:02] Sistema iniciado.
+[04/08/2019 21:44:02] Usuarios carregados com sucesso.
+[04/08/2019 21:44:02] Voos carregados com sucesso.
+[04/08/2019 21:44:32] Desligando sistema.
+[04/08/2019 21:44:32] Usuarios salvos com sucesso.
+[04/08/2019 21:44:32] Voos salvos com sucesso
+[04/08/2019 21:44:32] Sistema desligou sem erros.
+[04/08/2019 21:44:58] Sistema iniciado.
+[04/08/2019 21:44:58] Usuarios carregados com sucesso.
+[04/08/2019 21:44:58] Voos carregados com sucesso.
+[04/08/2019 21:45:20] Desligando sistema.
+[04/08/2019 21:45:20] Usuarios salvos com sucesso.
+[04/08/2019 21:45:20] Voos salvos com sucesso
+[04/08/2019 21:45:20] Sistema desligou sem erros.
+[04/08/2019 21:47:30] Sistema iniciado.
+[04/08/2019 21:47:30] Usuarios carregados com sucesso.
+[04/08/2019 21:47:30] Voos carregados com sucesso.
+[04/08/2019 21:47:57] Desligando sistema.
+[04/08/2019 21:47:57] Usuarios salvos com sucesso.
+[04/08/2019 21:47:57] Voos salvos com sucesso
+[04/08/2019 21:47:57] Sistema desligou sem erros.
+[04/08/2019 21:54:23] Sistema iniciado.
+[04/08/2019 21:54:23] Usuarios carregados com sucesso.
+[04/08/2019 21:54:23] Voos carregados com sucesso.
+[04/08/2019 21:54:51] Desligando sistema.
+[04/08/2019 21:54:51] Usuarios salvos com sucesso.
+[04/08/2019 21:54:51] Voos salvos com sucesso
+[04/08/2019 21:54:51] Sistema desligou sem erros.
+[04/08/2019 21:55:07] Sistema iniciado.
+[04/08/2019 21:55:07] Usuarios carregados com sucesso.
+[04/08/2019 21:55:07] Voos carregados com sucesso.
+[04/08/2019 21:55:39] Desligando sistema.
+[04/08/2019 21:55:39] Usuarios salvos com sucesso.
+[04/08/2019 21:55:39] Voos salvos com sucesso
+[04/08/2019 21:55:39] Sistema desligou sem erros.
+[04/08/2019 21:56:07] Sistema iniciado.
+[04/08/2019 21:56:07] Usuarios carregados com sucesso.
+[04/08/2019 21:56:07] Voos carregados com sucesso.
+[04/08/2019 21:56:26] Desligando sistema.
+[04/08/2019 21:56:26] Usuarios salvos com sucesso.
+[04/08/2019 21:56:26] Voos salvos com sucesso
+[04/08/2019 21:56:26] Sistema desligou sem erros.
+[04/08/2019 21:56:42] Sistema iniciado.
+[04/08/2019 21:56:42] Usuarios carregados com sucesso.
+[04/08/2019 21:56:42] Voos carregados com sucesso.
+[04/08/2019 21:57:03] Desligando sistema.
+[04/08/2019 21:57:03] Usuarios salvos com sucesso.
+[04/08/2019 21:57:03] Voos salvos com sucesso
+[04/08/2019 21:57:03] Sistema desligou sem erros.
+[04/08/2019 21:57:14] Sistema iniciado.
+[04/08/2019 21:57:14] Usuarios carregados com sucesso.
+[04/08/2019 21:57:14] Voos carregados com sucesso.
+[04/08/2019 21:57:31] Desligando sistema.
+[04/08/2019 21:57:31] Usuarios salvos com sucesso.
+[04/08/2019 21:57:31] Voos salvos com sucesso
+[04/08/2019 21:57:31] Sistema desligou sem erros.
+[04/08/2019 21:57:38] Sistema iniciado.
+[04/08/2019 21:57:38] Usuarios carregados com sucesso.
+[04/08/2019 21:57:38] Voos carregados com sucesso.
+[04/08/2019 21:58:00] Desligando sistema.
+[04/08/2019 21:58:00] Usuarios salvos com sucesso.
+[04/08/2019 21:58:00] Voos salvos com sucesso
+[04/08/2019 21:58:00] Sistema desligou sem erros.
