@@ -43,10 +43,10 @@ public class ViewCriarVoo extends JFrame {
 	private JButton button;
 	private JButton button_1;
 	private JLabel lblData;
-	private JFormattedTextField frmtdtxtfldData;
+	private JFormattedTextField txtData;
 	private MaskFormatter fmtData;
 	private JLabel lblHora;
-	private JFormattedTextField frmtdtxtfldHora;
+	private JFormattedTextField txtHora;
 	private MaskFormatter fmtHora;
 	private JLabel lblOrigem;
 	private JTextField txtOrigem;
@@ -58,11 +58,12 @@ public class ViewCriarVoo extends JFrame {
 	private JList<String> lstAvioes;
 	private JButton btnVerificarDisponibilidade;
 	private JLabel lblValorClasseEconomica;
-	private JFormattedTextField frmtdtxtfldValorClasseEconomica;
+	private JFormattedTextField txtValorClasseEconomica;
 	private JLabel lblValorPrimeiraClasse;
-	private JFormattedTextField frmtdtxtfldValorPrimeiraClasse;
+	private JFormattedTextField txtValorPrimeiraClasse;
 
 	public ViewCriarVoo() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -96,11 +97,12 @@ public class ViewCriarVoo extends JFrame {
 		}
 		
 		fmtData.setValidCharacters("0123456789");
-		frmtdtxtfldData = new JFormattedTextField(fmtData);
-		frmtdtxtfldData.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		frmtdtxtfldData.setHorizontalAlignment(SwingConstants.CENTER);
-		frmtdtxtfldData.setBounds(88, 13, 85, 25);
-		panel.add(frmtdtxtfldData);
+		txtData = new JFormattedTextField(fmtData);
+		txtData.setToolTipText("Data do Voo");
+		txtData.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		txtData.setHorizontalAlignment(SwingConstants.CENTER);
+		txtData.setBounds(88, 13, 85, 25);
+		panel.add(txtData);
 		
 		lblHora = new JLabel("Hora:");
 		lblHora.setHorizontalAlignment(SwingConstants.LEFT);
@@ -114,11 +116,12 @@ public class ViewCriarVoo extends JFrame {
 		}
 		
 		fmtHora.setValidCharacters("0123456789");
-		frmtdtxtfldHora = new JFormattedTextField(fmtHora);
-		frmtdtxtfldHora.setText(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
-		frmtdtxtfldHora.setHorizontalAlignment(SwingConstants.CENTER);
-		frmtdtxtfldHora.setBounds(313, 13, 60, 25);
-		panel.add(frmtdtxtfldHora);
+		txtHora = new JFormattedTextField(fmtHora);
+		txtHora.setToolTipText("Hora do Voo");
+		txtHora.setText(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+		txtHora.setHorizontalAlignment(SwingConstants.CENTER);
+		txtHora.setBounds(313, 13, 60, 25);
+		panel.add(txtHora);
 		
 		lblOrigem = new JLabel("Origem:");
 		lblOrigem.setHorizontalAlignment(SwingConstants.LEFT);
@@ -126,6 +129,7 @@ public class ViewCriarVoo extends JFrame {
 		panel.add(lblOrigem);
 		
 		txtOrigem = new JTextField();
+		txtOrigem.setToolTipText("Origem do Voo");
 		txtOrigem.setHorizontalAlignment(SwingConstants.LEFT);
 		txtOrigem.setColumns(8);
 		txtOrigem.setBounds(88, 50, 285, 25);
@@ -137,6 +141,7 @@ public class ViewCriarVoo extends JFrame {
 		panel.add(lblDestino);
 		
 		txtDestino = new JTextField();
+		txtDestino.setToolTipText("Destino do Voo");
 		txtDestino.setHorizontalAlignment(SwingConstants.LEFT);
 		txtDestino.setColumns(8);
 		txtDestino.setBounds(88, 91, 285, 25);
@@ -152,6 +157,7 @@ public class ViewCriarVoo extends JFrame {
 		panel.add(scrollPane);
 
 		lstAvioes = new JList<String>();
+		lstAvioes.setToolTipText("Lista de Avioes Disponiveis");
 		lstAvioes.setEnabled(false);
 		lstAvioes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(lstAvioes);
@@ -161,8 +167,8 @@ public class ViewCriarVoo extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					model = new DefaultListModel<String>();
-					LocalDate data = LocalDate.parse(frmtdtxtfldData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-					LocalTime hora = LocalTime.parse(frmtdtxtfldHora.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+					LocalDate data = LocalDate.parse(txtData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					LocalTime hora = LocalTime.parse(txtHora.getText(), DateTimeFormatter.ofPattern("HH:mm"));
 					lblAviao.setEnabled(true);
 					lstAvioes.setEnabled(true);
 					if (Sistema.getQtdAvioes() > 0) {
@@ -183,30 +189,32 @@ public class ViewCriarVoo extends JFrame {
 		lblValorClasseEconomica.setBounds(12, 171, 176, 23);
 		panel.add(lblValorClasseEconomica);
 		
-		frmtdtxtfldValorClasseEconomica = new JFormattedTextField();
-		frmtdtxtfldValorClasseEconomica.setHorizontalAlignment(SwingConstants.LEFT);
-		frmtdtxtfldValorClasseEconomica.setColumns(8);
-		frmtdtxtfldValorClasseEconomica.setBounds(190, 170, 183, 25);
-		panel.add(frmtdtxtfldValorClasseEconomica);
+		txtValorClasseEconomica = new JFormattedTextField();
+		txtValorClasseEconomica.setToolTipText("Valor da Passagem da Classe Economica");
+		txtValorClasseEconomica.setHorizontalAlignment(SwingConstants.LEFT);
+		txtValorClasseEconomica.setColumns(8);
+		txtValorClasseEconomica.setBounds(190, 170, 183, 25);
+		panel.add(txtValorClasseEconomica);
 		
 		lblValorPrimeiraClasse = new JLabel("Valor Primeira Classe:");
 		lblValorPrimeiraClasse.setHorizontalAlignment(SwingConstants.LEFT);
 		lblValorPrimeiraClasse.setBounds(12, 131, 176, 23);
 		panel.add(lblValorPrimeiraClasse);
 		
-		frmtdtxtfldValorPrimeiraClasse = new JFormattedTextField();
-		frmtdtxtfldValorPrimeiraClasse.setHorizontalAlignment(SwingConstants.LEFT);
-		frmtdtxtfldValorPrimeiraClasse.setColumns(8);
-		frmtdtxtfldValorPrimeiraClasse.setBounds(190, 130, 183, 25);
-		panel.add(frmtdtxtfldValorPrimeiraClasse);
+		txtValorPrimeiraClasse = new JFormattedTextField();
+		txtValorPrimeiraClasse.setToolTipText("Valor da Passagem da Primeira Classe");
+		txtValorPrimeiraClasse.setHorizontalAlignment(SwingConstants.LEFT);
+		txtValorPrimeiraClasse.setColumns(8);
+		txtValorPrimeiraClasse.setBounds(190, 130, 183, 25);
+		panel.add(txtValorPrimeiraClasse);
 		
 		DecimalFormat dFormat = new DecimalFormat("#,###,###.00");
 		NumberFormatter formatter = new NumberFormatter(dFormat);
 		formatter.setFormat(dFormat);
 		formatter.setAllowsInvalid(false);
 		
-		frmtdtxtfldValorClasseEconomica.setFormatterFactory(new DefaultFormatterFactory (formatter));
-		frmtdtxtfldValorPrimeiraClasse.setFormatterFactory(new DefaultFormatterFactory (formatter));
+		txtValorClasseEconomica.setFormatterFactory(new DefaultFormatterFactory (formatter));
+		txtValorPrimeiraClasse.setFormatterFactory(new DefaultFormatterFactory (formatter));
 		
 		panel_1 = new JPanel();
 		panel_1.setBounds(12, 372, 385, 37);
@@ -220,10 +228,10 @@ public class ViewCriarVoo extends JFrame {
 					try {
 						String origem = txtOrigem.getText();
 						String destino = txtDestino.getText();
-						LocalDate data = LocalDate.parse(frmtdtxtfldData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-						LocalTime hora = LocalTime.parse(frmtdtxtfldHora.getText(), DateTimeFormatter.ofPattern("HH:mm"));
-						double precoEconomica = Double.parseDouble(formatter.getFormat().parseObject(frmtdtxtfldValorClasseEconomica.getText()).toString());
-						double precoPrimeira = Double.parseDouble(formatter.getFormat().parseObject(frmtdtxtfldValorClasseEconomica.getText()).toString());
+						LocalDate data = LocalDate.parse(txtData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+						LocalTime hora = LocalTime.parse(txtHora.getText(), DateTimeFormatter.ofPattern("HH:mm"));
+						double precoEconomica = Double.parseDouble(formatter.getFormat().parseObject(txtValorClasseEconomica.getText()).toString());
+						double precoPrimeira = Double.parseDouble(formatter.getFormat().parseObject(txtValorPrimeiraClasse.getText()).toString());
 						Aviao aviao = new Aviao(lstAvioes.getSelectedValue());
 						Voo voo = Sistema.validaCriacaoVoo(origem, destino, data, hora, precoEconomica, precoPrimeira, aviao);
 						Sistema.criaVoo(voo, aviao);

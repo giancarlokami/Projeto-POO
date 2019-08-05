@@ -196,10 +196,6 @@ public class Atendente extends Usuario {
 		msg = "Voo criado com sucesso!";
 		JOptionPane.showMessageDialog(null, msg, "Sucesso", JOptionPane.PLAIN_MESSAGE);
 	}
-	
-	public void cancelaVoo(ArrayList<Voo> voos) {
-		
-	}
 
 	@Override
 	public String toString() {

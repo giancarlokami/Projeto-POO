@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import usuario.Passageiro;
+
 public class Voo implements Serializable {
 
 	private static final long serialVersionUID = -8902228118656955748L;
@@ -70,7 +72,7 @@ public class Voo implements Serializable {
 		this.aviao = aviao;
 	}
 
-	public void inicializaPoltronas() {
+	private void inicializaPoltronas() {
 		String tipo;
 		for(int i=1;i<=20;i++) {
 			if(i%4==1||i%4==0) tipo = "Janela";
@@ -107,6 +109,18 @@ public class Voo implements Serializable {
 		return poltronas;
 	}
 	
+	public int getQtdPoltronasPrimeiraClasseOcupadas() {
+		return poltronas.stream().filter(p -> p.ehPrimeiraClasse() && p.estaOcupada()).collect(Collectors.toList()).size();
+	}
+	
+	public int getQtdPoltronasClasseEconomicaOcupadas() {
+		return poltronas.stream().filter(p -> !p.ehPrimeiraClasse() && p.estaOcupada()).collect(Collectors.toList()).size();
+	}
+	
+	public int getQtdPoltronasLivres() {
+		return poltronas.stream().filter(p -> !p.estaOcupada()).collect(Collectors.toList()).size();
+	}
+	
 	public double getValorTotalClasseEconomica() {
 		int qtdEconAdulto = getPoltronas().stream().filter(p -> !p.ehPrimeiraClasse() && p.estaOcupada()&&p.ehAdulto()).collect(Collectors.toList()).size();
 		int qtdEconCrianca = getPoltronas().stream().filter(p -> !p.ehPrimeiraClasse() && p.estaOcupada()&&!p.ehAdulto()).collect(Collectors.toList()).size();
@@ -127,5 +141,8 @@ public class Voo implements Serializable {
 	public String toString() {
 		return String.format("Origem: %s | Destino: %s | Data: %s:%s | Aviao: %s", getOrigem(), getDestino(), getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), getHora().format(DateTimeFormatter.ofPattern("HH:mm")), getAviao());
 	}
-	
+
+	public int getQtdPassageirosMenores() {
+		return poltronas.stream().filter(p -> p.getUsuario() != null && p.getUsuario() instanceof Passageiro && p.getUsuario().getIdade() < 18).collect(Collectors.toList()).size();
+	}
 }

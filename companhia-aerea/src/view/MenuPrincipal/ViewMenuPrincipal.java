@@ -24,6 +24,7 @@ public class ViewMenuPrincipal extends JFrame {
 	private JButton btnSair;
 
 	public ViewMenuPrincipal() {
+		setResizable(false);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

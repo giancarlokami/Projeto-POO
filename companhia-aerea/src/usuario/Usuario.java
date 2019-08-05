@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import aviao.Poltrona;
 import aviao.Voo;
+import pagamento.MetodoPagamento;
+import principal.Sistema;
 
 public abstract class Usuario implements Serializable {
 	
@@ -22,6 +24,7 @@ public abstract class Usuario implements Serializable {
 	public Usuario(String nome) {
 		setNome(nome);
 		setIdade(18);
+		this.reservadas = new ArrayList<Poltrona>();
 	}
 
 	public String getNome() {
@@ -50,8 +53,9 @@ public abstract class Usuario implements Serializable {
 		
 	}
 	
-	public void pagaReserva() {
-		
+	public static void cobra(MetodoPagamento metodo) {
+		double valor = (double) Sistema.calculaTotalReserva();
+		metodo.cobra(valor); 
 	}
 	
 	public void cancelaReserva(Poltrona poltrona) {
@@ -63,12 +67,9 @@ public abstract class Usuario implements Serializable {
 		
 	}
 	
-	public void reservaVoo(Poltrona poltrona) {
+	public void reservaPoltrona(Poltrona poltrona) {
 		this.reservadas.add(poltrona);
-	}
-	
-	public void imprimeReservas() {
-		this.reservadas.stream().forEach(c->System.out.println(c));
+		poltrona.reserva(this);
 	}
 	
 	public void embarca(Voo voo) {
@@ -81,5 +82,9 @@ public abstract class Usuario implements Serializable {
 
 	private void setIdade(int idade) {
 		this.idade = idade;
+	}
+
+	public ArrayList<Poltrona> getReservas() {
+		return reservadas;
 	}
 }
