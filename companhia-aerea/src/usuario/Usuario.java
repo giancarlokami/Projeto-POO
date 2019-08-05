@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import aviao.Poltrona;
 import aviao.Voo;
+import pagamento.MetodoPagamento;
+import principal.Sistema;
 
 public abstract class Usuario implements Serializable {
 	
@@ -51,8 +53,9 @@ public abstract class Usuario implements Serializable {
 		
 	}
 	
-	public void pagaReserva() {
-		
+	public static void cobra(MetodoPagamento metodo) {
+		double valor = (double) Sistema.calculaTotalReserva();
+		metodo.cobra(valor); 
 	}
 	
 	public void cancelaReserva(Poltrona poltrona) {

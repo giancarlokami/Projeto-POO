@@ -2,13 +2,20 @@ package view.Comum;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 
+import pagamento.BoletoBancarioMock;
+import pagamento.CartaoCreditoMock;
 import principal.Sistema;
+import usuario.Usuario;
+import view.MenuPassageiro.ViewDadosCartao;
+
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -16,6 +23,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+
 import java.awt.Font;
 
 public class ViewReservarVoo extends JFrame {
@@ -23,9 +32,15 @@ public class ViewReservarVoo extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel panel;
+	private JPanel panel01;
+	private JPanel rdbtnPanel;
+	private JRadioButton rdbtnCartao;
+	private JRadioButton rdbtnBoleto;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton btnSair;
 	private JButton btnReservarPoltronas;
 	private JLabel lblInformaesDoVoo;
+	private JLabel lblPagamento;
 	private JButton btnSelecionarPoltronas;
 	private JLabel lblInformaesDaReserva;
 	private JTextArea txtrInformacoesDaReserva;
@@ -41,7 +56,7 @@ public class ViewReservarVoo extends JFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 461, 383);
+		setBounds(100, 100, 461, 425);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,21 +64,65 @@ public class ViewReservarVoo extends JFrame {
 		contentPane.setLayout(null);
 		
 		panel = new JPanel();
-		panel.setBounds(12, 292, 426, 49);
+		panel.setBounds(12, 325, 426, 45);
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(0, 2, 20, 0));
+		
+		panel01 = new JPanel();
+		panel01.setBounds(12, 250, 426, 35);
+		contentPane.add(panel01);
+		panel01.setLayout(new GridLayout(0, 2, 20, 0));
+		
+		rdbtnPanel = new JPanel();
+		rdbtnPanel.setBounds(12, 285, 426, 25);
+		contentPane.add(rdbtnPanel);
+		rdbtnPanel.setLayout(new GridLayout(0, 2, 20, 0));
+		
+		//Opções de pagamento
+		
+		lblPagamento = new JLabel("Selecione a forma de pagamento:");
+		lblPagamento.setBounds(12, 172, 195, 15);
+		panel01.add(lblPagamento);
+		
+		rdbtnCartao = new JRadioButton("Cartão de Crédito");
+		rdbtnCartao.setSelected(true);
+		rdbtnCartao.setVerticalAlignment(SwingConstants.BOTTOM);
+		buttonGroup.add(rdbtnCartao);
+		rdbtnCartao.setHorizontalAlignment(SwingConstants.LEFT);
+		rdbtnPanel.add(rdbtnCartao);
+		
+		rdbtnBoleto = new JRadioButton("Boleto Bancário");
+		
+		rdbtnBoleto.setVerticalAlignment(SwingConstants.BOTTOM);
+		buttonGroup.add(rdbtnBoleto);
+		rdbtnBoleto.setHorizontalAlignment(SwingConstants.LEFT);
+		rdbtnPanel.add(rdbtnBoleto);
+		
 		
 		btnReservarPoltronas = new JButton("Reservar Poltronas");
 		btnReservarPoltronas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (Sistema.getPoltronasUsuario() != null && Sistema.getPoltronasUsuario().size() > 0) {
 					try {
-						Sistema.mostraAviso("Poltronas reservadas com sucesso!", JOptionPane.PLAIN_MESSAGE);
+						if(rdbtnCartao.isSelected()) {
+							
+							new ViewDadosCartao().setVisible(true);
+							dispose();
+							
+						}else if(rdbtnBoleto.isSelected()) {
+							
+							Usuario.cobra(new BoletoBancarioMock());
+							new ViewProcurarVoo().setVisible(true);
+							dispose();
+							
+						}
+						
+						//Sistema.mostraAviso("Poltronas reservadas com sucesso!", JOptionPane.PLAIN_MESSAGE);
 					} catch (Exception e) {
 						Sistema.mostraAviso(e.toString(), JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
-					Sistema.mostraAviso("Ãˆ preciso selecionar poltronas", JOptionPane.ERROR_MESSAGE);
+					Sistema.mostraAviso("É preciso selecionar poltronas", JOptionPane.ERROR_MESSAGE);
 				}				
 			}
 		});
@@ -83,7 +142,7 @@ public class ViewReservarVoo extends JFrame {
 		
 		txtrInformacoesDoVoo = new JTextArea();
 		txtrInformacoesDoVoo.setFont(new Font("Dialog", Font.BOLD, 12));
-		txtrInformacoesDoVoo.setBounds(22, 30, 416, 93);
+		txtrInformacoesDoVoo.setBounds(12, 30, 416, 93);
 		contentPane.add(txtrInformacoesDoVoo);
 		txtrInformacoesDoVoo.setBackground(UIManager.getColor("Button.background"));
 		txtrInformacoesDoVoo.setEditable(false);

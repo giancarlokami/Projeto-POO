@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import aviao.Aviao;
 import aviao.Poltrona;
 import aviao.Voo;
+import pagamento.MetodoPagamento;
 import usuario.Atendente;
 import usuario.Passageiro;
 import usuario.Usuario;
@@ -465,9 +466,10 @@ public class Sistema {
 		return polt;
 	}
 	
-	private static double calculaTotalReserva() {
+	public static double calculaTotalReserva() {
 		return (getVooAtual().getPrecoPrimeiraClasse() * getQtdPoltronasPrimeiraClasseSelecionadas()) +
 				(getVooAtual().getPrecoClasseEconomica() * getQtdPoltronasClasseEconomicaSelecionadas());
+		
 	}
 	
 	public static ArrayList<Voo> getReservasUsuarioAtual() {

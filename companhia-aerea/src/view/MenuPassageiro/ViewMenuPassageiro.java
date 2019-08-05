@@ -8,7 +8,7 @@ import principal.Sistema;
 import view.Comum.ViewAlterarNome;
 import view.Comum.ViewCancelarReserva;
 import view.Comum.ViewConsultarReservas;
-import view.Comum.ViewPagarReserva;
+//import view.Comum.ViewPagarReserva;
 import view.Comum.ViewProcurarVoo;
 import view.MenuPrincipal.ViewMenuPrincipal;
 
@@ -26,7 +26,7 @@ public class ViewMenuPassageiro extends JFrame {
 	private JPanel contentPane;
 	private JButton btnConsultarReservas;
 	private JButton btnCancelarReserva;
-	private JButton btnPagarReserva;
+	//private JButton btnPagarReserva;
 	private JButton btnProcurarVoo;
 	private JButton btnAlterarNome;
 	private JButton btnSair;
@@ -64,14 +64,14 @@ public class ViewMenuPassageiro extends JFrame {
 		});
 		panel.add(btnConsultarReservas);
 		
-		btnPagarReserva = new JButton("Pagar Reserva");
+		 /*btnPagarReserva = new JButton("Pagar Reserva");
 		btnPagarReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new ViewPagarReserva().setVisible(true);
 				dispose();
 			}
 		});
-		panel.add(btnPagarReserva);
+		panel.add(btnPagarReserva);*/
 		
 		btnCancelarReserva = new JButton("Cancelar Reserva");
 		btnCancelarReserva.addActionListener(new ActionListener() {
